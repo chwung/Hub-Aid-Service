@@ -60,7 +60,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
   <body class = "bg-info">
       <div class="row vh-100 align-items-center justify-content-center">
         <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-4 bg-white rounded p-5 shadow">
-          <img src="Vaccine_Icon.png" alt="Vaccine Logo" style="width: 50%; height: 25%; margin-left: 25%">
           <h1 class="mb-0 text-center font-weight-bold">Create an Account</h1>
           <form id="form" name="staffForm" method="post">
             <div class="mb-4">

@@ -17,10 +17,10 @@
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body class="container bg-info">
-    <div class="row align-items-center">
-        <div class="col box bg-white">
-          <h1 class="text-center">Hub Aid Service</h1>
+  <body class="container-fluid bg-info" style="padding: 100px">
+    <div class="row align-items-center" style="margin-top: 200px; flex-wrap: nowrap;">
+        <div class="col-4 box bg-white" style="margin-left: 10px;">
+          <h1 class="text-center" >Hub Aid Service</h1>
           <form method="POST" id="form" action="login.php">
             <div class="form-group">
               <label for="username">Username:</label>
@@ -38,7 +38,8 @@
           <a href="register.php" class="mb-0 text-center">Don't have an account?</a>
           </p>  
         </div>
-        <div class="col">
+
+        <div class="col-8">
             <h1>For Donor</h1>
             <a class="btn btn-primary w-100" href="appeals.php" role="button">View Appeals</a>
         </div>
