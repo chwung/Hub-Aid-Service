@@ -3,7 +3,8 @@
 }
 
 body {
-	background: #f6f5f7;
+	background-image: url('bg2.jpg');
+	background-size: cover;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -94,6 +95,7 @@ input {
 	left: 0;
 	width: 50%;
 	z-index: 2;
+	
 }
 
 .container.right-panel-active .sign-in-container {
