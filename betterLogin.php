@@ -58,7 +58,7 @@
         $sqlOrgRep = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
         $rep = $connection->query($sqlOrgRep);
         
-        $sqlAdmin = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
+        $sqlAdmin = "SELECT * FROM ADMIN WHERE username = '$username' AND password = '$password'";
         $rep = $connection->query($sqlOrgRep);
 
         if($applicant -> num_rows > 0){
