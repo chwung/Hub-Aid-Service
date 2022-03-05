@@ -40,11 +40,9 @@
         </li>
         
       </ul>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100">
         <li class="nav-item ">
-            <a class="nav-link" href="betterLogin.php"> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                 <i class="fa fa-sign-out fa-fw "></i><span class="d-inline p-2 font-weight-bolder">Log Out</span></a>
+            <a class="nav-link" href="betterLogin.php"><i class="fa fa-sign-out fa-fw "></i><span class="d-inline p-2 font-weight-bolder">Log Out</span></a>
         </li>
       </ul>
     </div>
@@ -56,7 +54,7 @@
         <div class="col-lg-5">
             
             <br>
-            <select id="choose" class="m-2 w-50" name ="choose" onchange ="">
+            <select id="choose" class="m-2 w-50" name ="choose" onchange ="displaylist()">
                     <option >--Choose a Organization--</option>
                     <?php
                                     $connect = mysqli_connect("localhost","root","","hubaid");
@@ -70,7 +68,14 @@
 
                     ?>
             </select>
+            <Script>
+                        function displaylist(){
+                            document.getElementById("nameOrganization").style.visibility= "visible"; 
+                            document.getElementById("listRep").style.visibility= "visible";     
+                            
+                        }
 
+            </Script>
             <!--Trigger modal-->
             <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px" data-toggle="modal" data-target="#addOrganizationModal"><u>Add new organization</u></p>
 
@@ -112,7 +117,7 @@
 
             <p1 class="m-5 font-weight-bolder invisible" id="nameOrganization"> &emsp;&emsp;&nbsp; Organisation Name</p1>
             <br>
-            <div class="card m-2 invisible" style="width: 20rem;">
+            <div class="card m-2 invisible" style="width: 20rem;" id="listRep">
             <div class="card-body bg-light rounded" style="background: #FF416C;
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
