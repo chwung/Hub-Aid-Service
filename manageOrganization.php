@@ -58,6 +58,17 @@
             <br>
             <select id="choose" class="m-2 w-50" name ="choose" onchange ="">
                     <option >--Choose a Organization--</option>
+                    <?php
+                                    $connect = mysqli_connect("localhost","root","","hubaid");
+                                    $organization = mysqli_query($connect, "SELECT DISTINCT orgID FROM ORGANIZATION");
+                                    while ($organizationrow = mysqli_fetch_array($organization)) {
+                                        $organizationID = $organizationrow['orgID'];
+                                        echo "<option value='$organizationID'>";
+                                        echo "$organizationID";
+                                        echo '</option>';
+                                    }
+
+                    ?>
             </select>
 
             <!--Trigger modal-->
