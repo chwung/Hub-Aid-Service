@@ -183,7 +183,16 @@
                 <h5 class="card-title text-white">Organization Representatives</h5>
                 <div class="list-group">
                     <?php
-                    
+                        $idOrg = $_POST['idOrg'];
+                        $query = "SELECT * from organizationrep WHERE orgID = '$idOrg'";
+                        $data = $connection->query($query);
+                        if($data -> num_rows > 0){
+                            while($rep_data = $data -> fetch_assoc()){
+                                echo '<a href="#" class="list-group-item list-group-item-action">';
+                                echo "$idOrg";
+                                echo '</a>';
+                            }
+                        }
                     ?>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
@@ -271,7 +280,7 @@ if(isset($_POST['confirm'])){
 
     }else{
         $randomNumber = rand(100,999);
-        $password = substr($fullname,0,3).$randomNumber;
+        $password = substr($fullName,0,3).$randomNumber;
 
 
         
