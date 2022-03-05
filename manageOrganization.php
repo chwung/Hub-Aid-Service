@@ -2,6 +2,41 @@
     session_start();
 
     include ("dbcon.php");
+
+    if(isset($_POST['submit'])){
+
+        $orgName = $_POST['orgName'];
+        $orgAddress = $_POST['orgAddress'];
+
+        $flag = 0;
+    
+        $query = "SELECT * FROM organization";
+        $data = $connection->query($query);
+
+        if($data -> num_rows > 0){                        
+            while ($row = $data -> fetch_assoc()) {
+                if ($orgName == $row["orgName"]){
+                    $flag = 1;
+                    }
+            }
+        }
+        if ($flag == 1){                                  
+            echo '<script type="text/javascript">';
+            echo 'alert("Organization already exists.");';
+            echo '</script>';
+            
+
+        }else{
+            $sqlQuery = "INSERT INTO `organization`(`orgID`, `orgName`, `orgAddress`) VALUES ('orgID', '$orgName', '$orgAddress')";
+            $result = $connection -> query($sqlQuery);  //execute query (php)
+
+            echo '<script type="text/javascript">';
+            echo 'alert("Organization has been added.");';
+            echo '</script>';
+            
+        }
+    
+    }
 ?>
 
 <!doctype html>
@@ -40,7 +75,7 @@
         </li>
         
       </ul>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end w-100">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: auto; margin-right: 0;">
         <li class="nav-item ">
             <a class="nav-link" href="betterLogin.php"><i class="fa fa-sign-out fa-fw "></i><span class="d-inline p-2 font-weight-bolder">Log Out</span></a>
         </li>
@@ -70,9 +105,15 @@
             </select>
             <Script>
                         function displaylist(){
-                            document.getElementById("nameOrganization").style.visibility= "visible"; 
-                            document.getElementById("listRep").style.visibility= "visible";     
                             
+                            document.getElementById("nameOrganization").style.visibility= "visible"; 
+                            document.getElementById("listRep").style.visibility= "visible"; 
+                            
+                            var organization = document.getElementById("choose");
+                            var displayText = organization.options[organization.selectedIndex].text;
+                            document.getElementById("nameOrganization").value = displayText;
+                            
+
                         }
 
             </Script>
@@ -96,18 +137,18 @@
                             <div class="mb-4">
                                 <label for="organizationName" class="form-label font-weight-bold text-white">Name: </label>
                                 <br>
-                                <input type="text" class="form-organizationName form-control" name="organization_name" size="50" maxlength="30" placeholder="Organization Name" id="Organization Name" required>
+                                <input type="text" class="form-organizationName form-control" name="orgName" size="50" maxlength="30" placeholder="Organization Name" id="orgName" required>
                             </div>
                             <div class="mb-4">
                                 <label for="address" class="form-label font-weight-bold text-white">Address: </label>
                                 <br>
-                                <textarea class="form-address form-control" name="address" id="address" size="50" maxlength="200" placeholder="Organization Address" required></textarea>
+                                <textarea class="form-address form-control" name="orgAddress" id="orgAddress" size="50" maxlength="200" placeholder="Organization Address" required></textarea>
                             </div>
                         </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" name="submit" class="btn btn-primary" onclick="" data-dismiss="modal">Confirm</button>
-                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary">Confirm</button>
+                        </div>
                     </form>
                     
                 </div>
@@ -115,26 +156,28 @@
             </div>
             <br>
 
-            <p1 class="m-5 font-weight-bolder invisible" id="nameOrganization"> &emsp;&emsp;&nbsp; Organisation Name</p1>
+
+            <p1 class="m-5 font-weight-bolder" id="nameOrganization" style="visibility: hidden;"> &emsp;&emsp;&nbsp; Organization Name</p1>
             <br>
-            <div class="card m-2 invisible" style="width: 20rem;" id="listRep">
+            <div class="card m-2" style="width: 20rem; visibility: hidden;" id="listRep">
             <div class="card-body bg-light rounded" style="background: #FF416C;
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
                 <h5 class="card-title text-white">Organization Representatives</h5>
                 <div class="list-group">
+                   
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                 </div>
-                <button type="submit" name="submit" class="m-2 float-right btn btn-primary" onclick="" >Add New Rep</button>
+                <button type="submit" name="ok" class="m-2 float-right btn btn-primary" onclick="" >Add New Rep</button>
             </div>
             </div>
         </div>
         <div class="col-lg-6">
             
             <br>
-            <div class="card m-2 invisible" style="width: 30rem;">
+            <div class="card m-2" style="width: 30rem; visibility: hidden">
             <div class="card-body bg-light rounded " style="background: #FF416C;
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
@@ -161,7 +204,7 @@
                         <input type="text" class="form-control" name="job_title" size="50" maxlength="10" placeholder="Job Tittle" id="jobTitle" required>
                     </div>
                     
-                    <button type="submit" name="submit" class="m-2 float-right btn btn-primary" onclick="" >Confirm</button>
+                    <button type="submit" name="confirm" class="m-2 float-right btn btn-primary" onclick="" >Confirm</button>
                 </form>
                 
             </div>
