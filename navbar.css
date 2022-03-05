@@ -4,11 +4,11 @@
   }
   
   .navbar-dark .navbar-nav .nav-link {
-    color: #fff;
+    color: rgb(250, 250, 250);
   }
   
   .navbar-danger .navbar-nav .nav-link:hover,
   .navbar-danger .navbar-nav .nav-link:focus {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(36, 47, 255, 0.75);
   }
 

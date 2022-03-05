@@ -17,9 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="navbar.css">
 </head>
-  <body>
+  <body class="bg-light">
       <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-danger bg-danger">
+<nav class="navbar navbar-expand-lg navbar-danger" style="background: #FF416C;
+    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+    background: linear-gradient(to right, #FF4B2B, #FF416C);">
   <div class="container-fluid">
   <h2 class="text-center">HUBAID</h1>
     <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
@@ -34,7 +36,7 @@
       </form>
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa fa-address-book-o fa-fw"></i>Manage Organization</a>
+          <a class="nav-link"><i class="fa fa-address-book-o fa-fw"></i>Manage Organization</a>
         </li>
       </ul>
     </div>
@@ -51,7 +53,7 @@
             </select>
 
             <!--Trigger modal-->
-            <p class="h6 ml-2 font-weight-bolder text-primary" data-toggle="modal" data-target="#addOrganizationModal"><u>Add new organization</u></p>
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px" data-toggle="modal" data-target="#addOrganizationModal"><u>Add new organization</u></p>
 
             <!--Modal-->
             <div class="modal fade" id="addOrganizationModal" tabindex="-1" role="dialog" aria-labelledby="addOrganizationLabel" aria-hidden="true">
@@ -63,7 +65,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
-                    <form method="">
+                    <form method="POST">
                         <div class="modal-body">
                             <div class="mb-4">
                                 <label for="organizationName" class="form-label font-weight-bold">Name: </label>
@@ -86,11 +88,14 @@
                 </div>
             </div>
             <br>
-            <p1 class="m-5 font-weight-bolder" id="nameOrganization"> &emsp;&emsp;&nbsp; Organisation Name</p1>
+
+            <p1 class="m-5 font-weight-bolder invisible" id="nameOrganization"> &emsp;&emsp;&nbsp; Organisation Name</p1>
             <br>
             <div class="card m-2" style="width: 20rem;">
-            <div class="card-body bg-light">
-                <h5 class="card-title">Organization Representatives</h5>
+            <div class="card-body bg-light" style="background: #FF416C;
+            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+            background: linear-gradient(to right, #FF4B2B, #FF416C);">
+                <h5 class="card-title text-white">Organization Representatives</h5>
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
@@ -104,23 +109,25 @@
             
             <br>
             <div class="card m-2" style="width: 30rem;">
-            <div class="card-body bg-light">
-                <h5 class="card-title">Add New Representative</h5>
+            <div class="card-body bg-light" style="background: #FF416C;
+            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+            background: linear-gradient(to right, #FF4B2B, #FF416C);">
+                <h5 class="card-title text-white text-center">Add New Representative</h5>
                 <form>
                     <div class="mb-4">
-                        <label for="name" class="form-label font-weight-bold">Username: </label>
+                        <label for="name" class="form-label font-weight-bold text-white">Username: </label>
                         <input type="text" id="name" name="name" class="form-control" size="50" maxlength="30" placeholder="Username" required>
                     </div>
                     <div class="mb-4">
-                        <label for="fullname" class="form-label font-weight-bold">Full Name: </label>
+                        <label for="fullname" class="form-label font-weight-bold text-white">Full Name: </label>
                         <input type="text" id="fullName" name="fullName"  class="form-control" size="50" maxlength="30" placeholder="Full Name" required>
                     </div>
                     <div class="mb-4">
-                        <label for="mobileNo" class="form-label font-weight-bold">Mobile No: </label>
+                        <label for="mobileNo" class="form-label font-weight-bold text-white">Mobile No: </label>
                         <input type="text" id="mobileNo" name="mobileNo" class="form-control" maxlength="10"  placeholder="012-412-6588/0124126588" required>
                     </div>
                     <div class="mb-4">
-                        <label for="jobTitle" class="form-label font-weight-bold">Job Title: </label>
+                        <label for="jobTitle" class="form-label font-weight-bold text-white">Job Title: </label>
                         <input type="text" class="form-control" name="job_title" size="50" maxlength="30" placeholder="Job Tittle" id="jobTitle" required>
                     </div>
                     
