@@ -59,13 +59,13 @@
         $rep = $connection->query($sqlOrgRep);
         
         $sqlAdmin = "SELECT * FROM ADMIN WHERE username = '$username' AND password = '$password'";
-        $rep = $connection->query($sqlOrgRep);
+        $admin = $connection->query($sqlOrgRep);
 
         if($applicant -> num_rows > 0){
             $applicantFlag = 1;
         }else if($rep -> num_rows > 0) {
             $orgFlag = 1;
-        }else if($sqlAdmin > 0){
+        }else if($admin > 0){
             $adminFlag = 1;
         }
         
