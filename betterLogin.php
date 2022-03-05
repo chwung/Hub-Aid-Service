@@ -49,6 +49,7 @@
         $password = $_POST["password"];
         $applicantFlag = 0;
         $orgFlag = 0;
+        $adminFlag = 0;
   
         
         $sqlApplicant = "SELECT * FROM APPLICANT WHERE username = '$username' AND password = '$password'";
@@ -57,13 +58,18 @@
         $sqlOrgRep = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
         $rep = $connection->query($sqlOrgRep);
         
+        $sqlAdmin = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
+        $rep = $connection->query($sqlOrgRep);
+
         if($applicant -> num_rows > 0){
             $applicantFlag = 1;
         }else if($rep -> num_rows > 0) {
             $orgFlag = 1;
+        }else if($sqlAdmin > 0){
+            $adminFlag = 1;
         }
         
-        if($applicantFlag == 0 && $orgFlag == 0){
+        if($applicantFlag == 0 && $orgFlag == 0 && $adminFlag == 0){
             echo '<script type="text/javascript">';
             echo 'alert("Username or Password wrong.");';
             echo '</script>';
@@ -74,7 +80,10 @@
         } else if($orgFlag == 1){
             $_SESSION['repUsername'] = $username;
             $_SESSION['repPassword'] = $password;
-            header("location: manageOrganization.php");
-        }
+            header("location: orgRegisterApplicant.php");
+        } else if($adminFlag == 1){
+          header("location: manageOrganization.php");
+      }
+        
     }
     ?>
