@@ -69,10 +69,23 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             }
               $username = strtok($fullname,  ' ').$randomNumber;
               $password = substr($fullname,0,3).$randomNumber;
-              $sqlQuery = "INSERT INTO APPLICANT VALUES ('$username', '$password', '$fullname', '$email', '$mobileNo', '$idNo', '$address', '$householdIncome', '$applicantID', '$organization')";
-			      $result = $connection -> query($sqlQuery);  //execute query (php)
-				    if ($result == TRUE){                   //check status of query
-                header("location: betterLogin.php");
+              $sqluser = "INSERT INTO USER VALUES ('$username','$password', '$fullname', '$email', '$mobileNo')";
+              $sqlQuery = "INSERT INTO APPLICANT VALUES ('$email', '$idNo', '$address', '$householdIncome', '$applicantID', '$organization')";
+              
+            $docquery = "SELECT * FROM DOCUMENT";
+            $stt = $connection->prepare($docquery);
+            $stt->execute();
+            $stt->store_result();
+            $docCount = $stmt -> num_rows;
+
+            $documentID = 'D'.substr(str_repeat(0,4).$docCount+1, -4);
+              
+            $doc = "INSERT INTO DOCUMENT VALUES ('$documentID', '$file', '$description', '$applicantID')";
+			      $result = $connection -> query($sqlQuery);
+            $docresult = $connection -> query($doc);
+            $userresult = $connection -> query($sqluser);                      //execute query (php)
+				    if ($result == TRUE && $docresult == TRUE){                   //check status of query
+              header("location: betterLogin.php");
                 die;
 			  	}
             
@@ -109,16 +122,16 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             <div class="mb-4">
                 
                 <select id="choose" class=" form-control" name ="choose" onchange ="myFunction()" required>
-                  <option >--Choose a centre--</option>
-                  <option value="ye">test</option>
+                  <option>--Choose a centre--</option>
                 
                   <?php
-                    $query = "SELECT DISTINCT orgName FROM ORGANIZATION";
+                    $query = "SELECT * FROM ORGANIZATION";
                     $data = $connection -> query($query);
                     if($data -> num_rows > 0){
                         while($org = $data -> fetch_assoc()){
                             $orgName = $org['orgName'];
-                            echo "<option value='$orgName'>";
+                            $orgID = $org['orgID'];
+                            echo "<option value='$orgID'>";
                             echo "$orgName"; 
                             echo '</option>';
                             
@@ -127,9 +140,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                   ?>
                   <script>
                     function myFunction(){
-                    var orgName = $('#choose');
+                    //var orgName = $('#choose');
 
-                    document.getElementById("orgName").value = orgName;
+                    //document.getElementById("orgName").value = orgName;
+
+                    var organization = document.getElementById("choose");
+                    var displayText = organization.options[organization.selectedIndex].value;
+                    document.getElementById("orgName").value = displayText;
                     }
                    </script>;
 

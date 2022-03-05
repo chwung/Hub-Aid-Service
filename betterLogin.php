@@ -47,29 +47,43 @@
       {
         $username = $_POST["username"];
         $password = $_POST["password"];
+        $userFlag = 0;
         $applicantFlag = 0;
         $orgFlag = 0;
         $adminFlag = 0;
   
         
-        $sqlApplicant = "SELECT * FROM APPLICANT WHERE username = '$username' AND password = '$password'";
-        $applicant = $connection->query($sqlApplicant);
+        $sqlUser = "SELECT email FROM USER WHERE username = '$username' AND password = '$password'";
+        $user = $connection->query($sqlUser);
+        $email = $user -> fetch_assoc();
         
-        $sqlOrgRep = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
-        $rep = $connection->query($sqlOrgRep);
+        //$sqlOrgRep = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
+        //$rep = $connection->query($sqlOrgRep);
         
         $sqlAdmin = "SELECT * FROM ADMIN WHERE username = '$username' AND password = '$password'";
-        $admin = $connection->query($sqlOrgRep);
+        $admin = $connection->query($sqlAdmin);
 
-        if($applicant -> num_rows > 0){
-            $applicantFlag = 1;
-        }else if($rep -> num_rows > 0) {
-            $orgFlag = 1;
-        }else if($admin > 0){
+        if($user -> num_rows > 0){
+            $userFlag = 1;
+
+            $sqlapplicant = "SELECT * FROM APPLICANT WHERE email = '$email'";
+            $applicant = $connection->query($sqlUser);
+            if($applicant -> num_rows > 0){
+              $applicantFlag = 1;
+            }
+            
+            $sqlorgrep = "SELECT * FROM ORGANIZATIONREP WHERE email = '$email'";
+            $orgrep = $connection->query($sqlUser);
+            if($orgrep -> num_rows > 0){
+              $orgFlag = 1;
+            }
+        //}else if($rep -> num_rows > 0) {
+        //    $orgFlag = 1;
+        }else if($admin -> num_rows > 0){
             $adminFlag = 1;
         }
         
-        if($applicantFlag == 0 && $orgFlag == 0 && $adminFlag == 0){
+        if($userFlag == 0 && $adminFlag == 0){
             echo '<script type="text/javascript">';
             echo 'alert("Username or Password wrong.");';
             echo '</script>';
@@ -81,7 +95,8 @@
             $_SESSION['repUsername'] = $username;
             $_SESSION['repPassword'] = $password;
             header("location: orgRegisterApplicant.php");
-        } else if($adminFlag == 1){
+        } 
+        else if($adminFlag == 1){
           header("location: manageOrganization.php");
       }
         
