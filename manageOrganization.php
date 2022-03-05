@@ -102,13 +102,17 @@
             <select id="choose" class="m-2 w-50" name ="choose" onchange ="displaylist()">
                     <option >--Choose a Organization--</option>
                     <?php
-                                    $connect = mysqli_connect("localhost","root","","hubaid");
-                                    $organization = mysqli_query($connect, "SELECT DISTINCT orgID FROM ORGANIZATION");
-                                    while ($organizationrow = mysqli_fetch_array($organization)) {
-                                        $organizationID = $organizationrow['orgID'];
-                                        echo "<option value='$organizationID'>";
-                                        echo "$organizationID";
-                                        echo '</option>';
+                                    $query = "SELECT * FROM ORGANIZATION";
+                                    $data = $connection -> query($query);
+                                    if($data -> num_rows > 0){
+                                        while($org = $data -> fetch_assoc()){
+                                            $orgName = $org['orgName'];
+                                            $orgID = $org['orgID'];
+                                            echo "<option value='$orgName'>";
+                                            echo "$orgID"; 
+                                            echo '</option>';
+                
+                                        }
                                     }
 
                     ?>
@@ -117,26 +121,10 @@
                         function displaylist(){
 
                             var organization = document.getElementById("choose");
-                            var displayText = organization.options[organization.selectedIndex].text;
+                            var displayText = organization.options[organization.selectedIndex].value;
+                            var displayID = organization.options[organization.selectedIndex].text;
                             document.getElementById("nameOrganization").innerHTML = displayText;
-                            
-                            <?php
-
-                            
-
-
-                            $query = "SELECT * FROM organization";
-                            $data = $connection->query($query);
-                    
-                            if($data -> num_rows > 0){                        
-                                while ($row = $data -> fetch_assoc()) {
-                                    if ($orgName == $row["orgName"]){
-                                        $flag = 1;
-                                        }
-                                }
-                            }
-
-                            ?>
+                            document.getElementById("idOrg").value = displayID;
 
                             document.getElementById("nameOrganization").style.visibility= "visible"; 
                             document.getElementById("listRep").style.visibility= "visible"; 
@@ -185,6 +173,7 @@
             <br>
 
 
+            
             <p1 class="m-5 font-weight-bolder" id="nameOrganization" style="visibility: hidden;"> &emsp;&emsp;&nbsp; Organization Name</p1>
             <br>
             <div class="card m-2" style="width: 20rem; visibility: hidden;" id="listRep">
@@ -193,24 +182,33 @@
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
                 <h5 class="card-title text-white">Organization Representatives</h5>
                 <div class="list-group">
-                   
+                    <?php
+                    
+                    ?>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                     <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                 </div>
-                <button type="submit" name="ok" class="m-2 float-right btn btn-primary" onclick="" >Add New Rep</button>
+                <button type="submit" name="ok" class="m-2 float-right btn btn-primary" onclick="displayform()" >Add New Rep</button>
             </div>
             </div>
         </div>
+        <Script>
+            function displayform(){
+                document.getElementById("orgRepForm").style.visibility= "visible"; 
+             }
+
+         </Script>
         <div class="col-lg-6">
             
             <br>
-            <div class="card m-2" style="width: 30rem; visibility: hidden">
+            <div class="card m-2" style="width: 30rem; visibility: hidden" id="orgRepForm">
             <div class="card-body bg-light rounded " style="background: #FF416C;
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
                 <h5 class="card-title text-white text-center">Add New Representative</h5>
-                <form>
+                <form method="POST">
+                    <input type="text" id="idOrg" name="idOrg" size="50" maxlength="20" placeholder="ID" style="visibility: hidden;">
                     <div class="mb-4">
                         <label for="name" class="form-label font-weight-bold text-white">Username: </label>
                         <input type="text" id="name" name="name" class="form-control" size="50" maxlength="20" placeholder="Username" required>
@@ -225,11 +223,11 @@
                     </div>
                     <div class="mb-4">
                         <label for="email" class="form-label font-weight-bold text-white">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" size="50" maxlength="20" pattern=".+@.+\.com" placeholder="Email@gmail.com" required>
+                        <input type="email" id="email" name="email" class="form-control" size="50" maxlength="40" pattern=".+@.+\.com" placeholder="Email@gmail.com" required>
                     </div>
                     <div class="mb-4">
                         <label for="jobTitle" class="form-label font-weight-bold text-white">Job Title: </label>
-                        <input type="text" class="form-control" name="job_title" size="50" maxlength="10" placeholder="Job Tittle" id="jobTitle" required>
+                        <input type="text" class="form-control" name="job_title" size="50" maxlength="20" placeholder="Job Tittle" id="jobTitle" required>
                     </div>
                     
                     <button type="submit" name="confirm" class="m-2 float-right btn btn-primary" onclick="" >Confirm</button>
@@ -240,6 +238,56 @@
         </div>
     </div>
 </div>
+<?php
+if(isset($_POST['confirm'])){
+
+    $username = $_POST['name'];
+    $fullName = $_POST['fullName'];
+    $mobileNo = $_POST['mobileNo'];
+    $email = $_POST['email'];
+    $jobTittle = $_POST['fullName'];
+    $idOrg = $_POST['idOrg'];
+
+    $flag = 0;
+
+    $query = "SELECT * FROM USER";
+    $data = $connection->query($query);
+    $collection = "SELECT * FROM ORGANIZATIONREP";
+    $collect = $connection->query($collection);
+
+
+    if($data -> num_rows > 0){                        
+        while ($row = $data -> fetch_assoc()) {
+            if ($email == $row["email"]){
+                $flag = 1;
+                }
+        }
+    }
+    if ($flag == 1){                                  
+        echo '<script type="text/javascript">';
+        echo 'alert("Organization Representative already exists.");';
+        echo '</script>';
+        
+
+    }else{
+        $randomNumber = rand(100,999);
+        $password = substr($fullname,0,3).$randomNumber;
+
+
+        
+        $sqlQuery = "INSERT INTO `user`(`username`, `password`, `fullname`, `email`, `mobileNo`) VALUES ('$username','$password','$fullName', '$email','$mobileNo')";
+        $sql = "INSERT INTO `organizationrep`(`email`, `jobTitle`, `orgID`) VALUES ('$email', '$jobTittle', '$idOrg')";
+        $result = $connection -> query($sqlQuery);  //execute query (php)
+        $output = $connection -> query($sql);
+
+        echo '<script type="text/javascript">';
+        echo 'alert("Organization Representative has been added.");';
+        echo '</script>';
+        
+    }
+
+}
+?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
