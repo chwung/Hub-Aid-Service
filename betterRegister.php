@@ -6,22 +6,26 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 {
 
     //something was posted
-    $centre_name = $_POST['centreName'];
-    $centre_address = $_POST['address'];
-    $user_name = $_POST ['name'];
-    $full_name = $_POST['fullName'];
-    $password = $_POST['password'];
+    $fullname = $_POST['fullname'];
+    $idNo = $_POST['idNo'];
     $email = $_POST['email'];
-    $staff_id = $_POST['staffID'];
+    $householdIncome = $_POST['householdIncome'];
+    $address = $_POST['address'];
+    $file = $_POST['file'];
+    $description = $_POST['description'];
+    $mobileNo = $_POST['mobileNo'];
+    $organization = $_POST['orgName'];
     $flag = 0;
+    $same = 0;
 
-    $sqlQuery = "SELECT * FROM STAFFS";
+    $sqlQuery = "SELECT * FROM APPLICANT";
 
     $status = $connection->query($sqlQuery);
     
-    if($status -> num_rows > 0){                        //checks if there's any patients
+
+    if($status -> num_rows > 0){                        //checks if there's any applicants
         while ($row = $status -> fetch_assoc()) {
-          if ($email == $row["email"] || $username ==$row['username'] || $staff_id == $row['staff_id']){
+          if ($email == $row["email"]){
                 $flag = 1;
                 }
         }
@@ -29,19 +33,52 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 
     if ($flag == 1){ 
           echo '<script type="text/javascript">'; //user already exists
-          echo 'alert("Account already In Use.")';
+          echo 'alert("Email already in use.")';
           echo '</script>';                                   
         } else {                                        //user doer not exists
-            $sqlQuery = "INSERT INTO STAFFS VALUES ('$centre_name', '$centre_address', '$user_name', '$full_name', '$password', '$email', '$staff_id')";
+            $queryy = "SELECT * FROM APPLICANT";
+            $stmt = $connection->prepare($queryy);
+            $stmt->execute();
+            $stmt->store_result();
+            $applicantCount = $stmt -> num_rows;
+
+            $applicantID = 'A'.substr(str_repeat(0,4).$applicantCount+1, -4);
+            $randomNumber = rand(100,999);
+            
+
+            $sqlQuery = "SELECT * FROM APPLICANT";
+
+            $status = $connection->query($sqlQuery);
+    
+            if($status -> num_rows > 0){                        //checks if there's any applicants
+                while ($row = $status -> fetch_assoc()) {
+                  if ($username == $row["username"]){
+                        $same = 1;
+                        }
+                }
+            }
+            while($same == 1){
+              $same = 0;
+              if($status -> num_rows > 0){                        //checks if there's any applicants
+                while ($row = $status -> fetch_assoc()) {
+                  if ($username == $row["username"]){
+                        $same = 1;
+                        }
+                }
+            }
+            }
+              $username = strtok($fullname,  ' ').$randomNumber;
+              $password = substr($fullname,0,3).$randomNumber;
+              $sqlQuery = "INSERT INTO APPLICANT VALUES ('$username', '$password', '$fullname', '$email', '$mobileNo', '$idNo', '$address', '$householdIncome', '$applicantID', '$organization')";
 			      $result = $connection -> query($sqlQuery);  //execute query (php)
 				    if ($result == TRUE){                   //check status of query
-                header("location: login.php");
+                header("location: betterLogin.php");
                 die;
 			  	}
+            
+            
         }
-}
-
-                    
+}         
 ?>
 
 <!doctype html>
@@ -64,44 +101,35 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 	margin: -20px 0 50px;
   background-repeat: no-repeat;">
       <div class="row vh-100 align-items-center justify-content-center">
-        <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-4 rounded p-5 shadow bg-white" id="red">
-          <h1 class="mb-0 text-center font-weight-bold">Create an Account</h1>
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-4 rounded p-5 shadow bg-white" style="background: #FF416C;
+	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+	background: linear-gradient(to right, #FF4B2B, #FF416C);">
+          <h1 class="mb-0 text-center font-weight-bold" style="color: white">Create an Account</h1>
           <form id="form" name="staffForm" method="post">
             <div class="mb-4">
-              <label for="select" class="form-label font-weight-bold">Choose</label>
-              <br>
-                <select id="Select" class="form-control" onchange="location = this.value;">
-                    <option value="registerStaff.php">Healthcare AdministratorStaff</option>
-                    <option value="registerPatient.php">Patient</option>
-                </select>
-            </div>
-            <div class="mb-4">
                 
-                <select id="choose" class=" form-control" name ="choose" onchange ="myFunction()">
+                <select id="choose" class=" form-control" name ="choose" onchange ="myFunction()" required>
                   <option >--Choose a centre--</option>
+                  <option value="ye">test</option>
                 
                   <?php
-                    $query = "SELECT DISTINCT centre_name, centre_address FROM staffs";
+                    $query = "SELECT DISTINCT orgName FROM ORGANIZATION";
                     $data = $connection -> query($query);
                     if($data -> num_rows > 0){
-                        while($staff = $data -> fetch_assoc()){
-                            $centre = $staff['centre_name'];
-                            $add = $staff['centre_address'];
-                            echo "<option value='$centre-$add'>";
-                            echo "$centre"; 
+                        while($org = $data -> fetch_assoc()){
+                            $orgName = $org['orgName'];
+                            echo "<option value='$orgName'>";
+                            echo "$orgName"; 
                             echo '</option>';
                             
                         }
                     }
-
                   ?>
                   <script>
                     function myFunction(){
-                    var centre = $('#choose').val().split('-')[0];
-                    var address = $('#choose').val().split('-')[1];
+                    var orgName = $('#choose');
 
-                    document.getElementById("centre").value = centre;
-                    document.getElementById("address").value = address;
+                    document.getElementById("orgName").value = orgName;
                     }
                    </script>;
 
@@ -109,50 +137,59 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 
             </div>
             <div class="mb-4">
-                <label for="selectCentre" class="form-label font-weight-bold">Centre Name</label>
-                <input type="text" id="centre" name="centreName" class="form-control" placeholder="Centre Name" style="width: 100%;">
-                
-                <br>
-                <label for="address" class="form-label font-weight-bold">Centre Address</label>
-                <br>
-                <textarea name="address" id="address" rows="5" placeholder="Centre Address" style="width: 100%;"></textarea>
-                
+                <input type="hidden" id="orgName" name="orgName">
+                <label for="fullName" class="form-label font-weight-bold" style="color: white">Full Name</label>
+                <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Full Name" style="width: 100%;" required>
+            </div>
+            
+            <div class="mb-4">
+                <label for="mobileNo" class="form-label font-weight-bold" style="color: white">Mobile No</label>
+                <input type="text" id="mobileNo" name="mobileNo" class="form-control" placeholder="0123456789" style="width: 100%;" required>
+            </div>
 
-            </div>
             <div class="mb-4">
-              <label for="username" class="form-label font-weight-bold">Username</label>
+              <label for="idNo" class="form-label font-weight-bold" style="color: white">ID Number</label>
               <br>
-              <input type="text" id="name" name="name" class="form-control" size="50" maxlength="30" placeholder="Username" style="width: 100%;" required>
+              <input type="text" id="idNo" name="idNo"  class="form-control" size="50" maxlength="30" placeholder="000000000000" style="width: 100%;" required>
             </div>
+            
             <div class="mb-4">
-                <label for="fullname" class="form-label font-weight-bold">Full Name</label>
-                <br>
-                <input type="text" id="fullName" name="fullName"  class="form-control" size="50" maxlength="30" placeholder="Full Name" style="width: 100%;" required>
-            </div>
-            <div class="mb-4">
-              <label for="password" class="form-label font-weight-bold">Password</label>
-              <br>
-              <input type="password" id="password" name="password"  class="form-control" size="50" maxlength="30" placeholder="Password" style="width: 100%;" required>
-            </div>
-      
-            <div class="mb-4">
-              <label for="email" class="form-label font-weight-bold">Email</label>
+              <label for="email" class="form-label font-weight-bold" style="color: white">Email</label>
               <br>
               <input type="email" id="email" name="email" class="form-control" size="50" maxlength="30" pattern=".+@.+\.com" placeholder="Email@gmail.com" required>
             </div>
+
+            <div class="mb-4">
+                <label for="householdIncome" class="form-label font-weight-bold" style="color: white">Household Income</label>
+                <br>
+                <input type="number" id="householdIncome" name="householdIncome"  class="form-control" size="50" maxlength="30" placeholder="Household Income" style="width: 100%;" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="address" class="form-label font-weight-bold" style="color: white">Address</label>
+                <br>
+                <textarea name="address" id="address" rows="2" placeholder="Address" style="width: 100%;"></textarea>
+            </div>
       
             <div class="mb-4">
-              <label for="id" class="form-label font-weight-bold">StaffID</label>
+              <label for="file" class="form-label font-weight-bold" style="color: white">File</label>
               <br>
-              <input type="file" id="staffID" name="staffID" class="form-control-file" required>
+              <input type="file" id="file" name="file" class="form-control-file" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="form-label font-weight-bold" style="color: white">Description</label>
+                <br>
+                <textarea name="description" id="description" rows="2" placeholder="Description" style="width: 100%;"></textarea>
             </div>
       
             <div class="mb-4 text-center">
               <button type="submit" class="btn btn-primary w-25" id="btnSubmit" onclick="validateStaff()">submit</button>
-              <button type="button" class="btn btn-reset w-25" id="btnReset" onclick="reset()">reset</button>
+              <button type="button" class="btn btn-reset w-25" id="btnReset" onclick="reset()">Clear</button>
             </div>
+
           </form>
-          <p class="mb-0 text-center">Already have an account?<a href="login.php" class="mb-0 text-center text-decoration-none">Signup here!</a></p>
+          <p class="mb-0 text-center"><a href="betterLogin.php"  style="color: white">Already Have an Account?</a></p>
         </div>
       </div>
     
@@ -162,7 +199,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
-    <script src="Javascript.js"></script>
+    <script src="Javascript"></script>
 
   </body>
 </html>

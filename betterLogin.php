@@ -25,7 +25,9 @@
         <div class="form__input-group">
           <button type="submit" class="form__button">Submit</button>
         </div>
+        <a href="betterRegister.php" style="margin-top: 20px">Register as an Applicant Here</a>
      </form>
+     
     </div>
     
    <div class="overlay-container">
@@ -33,13 +35,11 @@
 			<div class="overlay-panel overlay-right">
 				<h1>Hello, Rich People!</h1>
 				<p>If you have a lot of money you can donate to some to these struggling people</p>
-				<button class="ghost" id="signUp">View Appeals</button>
+				<button class="ghost" id="signUp" onclick="location.href='appeals.php'">View Appeals</button>
 			</div>
 		</div>
 	</div>
  </div>
-  
-  <script src="scripts/main.js"></script>
   
 </body>
 <?php
@@ -47,34 +47,34 @@
       {
         $username = $_POST["username"];
         $password = $_POST["password"];
-        $patientFlag = 0;
-        $staffFlag = 0;
+        $applicantFlag = 0;
+        $orgFlag = 0;
   
         
-        $sqlPatient = "SELECT * FROM PATIENTS WHERE username = '$username' AND password = '$password'";
-        $patient = $connection->query($sqlPatient);
+        $sqlApplicant = "SELECT * FROM APPLICANT WHERE username = '$username' AND password = '$password'";
+        $applicant = $connection->query($sqlApplicant);
         
-        $sqlStaff = "SELECT * FROM STAFFS WHERE username = '$username' AND password = '$password'";
-        $staff = $connection->query($sqlStaff);
+        $sqlOrgRep = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
+        $rep = $connection->query($sqlOrgRep);
         
-        if($patient -> num_rows > 0){
-            $patientFlag = 1;
-        }else if($staff -> num_rows > 0) {
-            $staffFlag = 1;
+        if($applicant -> num_rows > 0){
+            $applicantFlag = 1;
+        }else if($rep -> num_rows > 0) {
+            $orgFlag = 1;
         }
         
-        if($staffFlag == 0 && $patientFlag == 0){
+        if($applicantFlag == 0 && $orgFlag == 0){
             echo '<script type="text/javascript">';
             echo 'alert("Username or Password wrong.");';
             echo '</script>';
-        } else if($patientFlag == 1) {
-            $_SESSION['patientUsername'] = $username;
-            $_SESSION['patientPassword'] = $password;
-            header("location: PatientProfile.php");
-        } else if($staffFlag == 1){
-            $_SESSION['staffUsername'] = $username;
-            $_SESSION['staffPassword'] = $password;
-            header("location: staffprofile.php");
+        } else if($applicantFlag == 1) {
+            $_SESSION['applicantUsername'] = $username;
+            $_SESSION['applicantPassword'] = $password;
+            header("location: appeals.php");
+        } else if($orgFlag == 1){
+            $_SESSION['repUsername'] = $username;
+            $_SESSION['repPassword'] = $password;
+            header("location: manageOrganization.php");
         }
     }
     ?>
