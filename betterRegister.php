@@ -44,9 +44,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 
             $applicantID = 'A'.substr(str_repeat(0,4).$applicantCount+1, -4);
             $randomNumber = rand(100,999);
-            
+            $username = strtok($fullname,  ' ').$randomNumber;
+            $password = substr($fullname,0,3).$randomNumber;
 
-            $sqlQuery = "SELECT * FROM APPLICANT";
+            $sqlQuery = "SELECT * FROM USER";
 
             $status = $connection->query($sqlQuery);
     
@@ -59,6 +60,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             }
             while($same == 1){
               $same = 0;
+              $username = strtok($fullname,  ' ').$randomNumber;
+              $password = substr($fullname,0,3).$randomNumber;
               if($status -> num_rows > 0){                        //checks if there's any applicants
                 while ($row = $status -> fetch_assoc()) {
                   if ($username == $row["username"]){
@@ -67,8 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                 }
             }
             }
-              $username = strtok($fullname,  ' ').$randomNumber;
-              $password = substr($fullname,0,3).$randomNumber;
+              
               $sqluser = "INSERT INTO USER VALUES ('$username','$password', '$fullname', '$email', '$mobileNo')";
               $sqlQuery = "INSERT INTO APPLICANT VALUES ('$email', '$idNo', '$address', '$householdIncome', '$applicantID', '$organization')";
               
@@ -76,7 +78,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             $stt = $connection->prepare($docquery);
             $stt->execute();
             $stt->store_result();
-            $docCount = $stmt -> num_rows;
+            $docCount = $stt -> num_rows;
 
             $documentID = 'D'.substr(str_repeat(0,4).$docCount+1, -4);
               
@@ -85,7 +87,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             $docresult = $connection -> query($doc);
             $userresult = $connection -> query($sqluser);                      //execute query (php)
 				    if ($result == TRUE && $docresult == TRUE){                   //check status of query
-              header("location: betterLogin.php");
+              echo '<script type="text/javascript">';
+              echo 'alert("Applicant Registered.")';
+              echo '</script>';
+              echo '<script type="text/javascript">';
+              echo 'window.location.href="betterLogin.php"';
+              echo '</script>';
                 die;
 			  	}
             
@@ -120,9 +127,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
           <h1 class="mb-0 text-center font-weight-bold" style="color: white">Create an Account</h1>
           <form id="form" name="staffForm" method="post">
             <div class="mb-4">
-                
-                <select id="choose" class=" form-control" name ="choose" onchange ="myFunction()" required>
-                  <option>--Choose a centre--</option>
+             <label for="choose" class="form-label font-weight-bold" style="color: white">Organization</label>
+                <select id="choose" class=" form-control" name ="choose" onclick ="myFunction()" required>
                 
                   <?php
                     $query = "SELECT * FROM ORGANIZATION";
@@ -131,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                         while($org = $data -> fetch_assoc()){
                             $orgName = $org['orgName'];
                             $orgID = $org['orgID'];
-                            echo "<option value='$orgID'>";
+                            echo "<option value='$orgID' selected>";
                             echo "$orgName"; 
                             echo '</option>';
                             
@@ -154,7 +160,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 
             </div>
             <div class="mb-4">
-                <input type="hidden" id="orgName" name="orgName">
+                <input type="hidden" id="orgName" name="orgName" value="<?php echo $orgID ?>">
                 <label for="fullName" class="form-label font-weight-bold" style="color: white">Full Name</label>
                 <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Full Name" style="width: 100%;" required>
             </div>

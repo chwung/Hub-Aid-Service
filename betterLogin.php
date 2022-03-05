@@ -56,6 +56,7 @@
         $sqlUser = "SELECT email FROM USER WHERE username = '$username' AND password = '$password'";
         $user = $connection->query($sqlUser);
         $email = $user -> fetch_assoc();
+        $emailvalue = $email['email'];
         
         //$sqlOrgRep = "SELECT * FROM ORGANIZATIONREP WHERE username = '$username' AND password = '$password'";
         //$rep = $connection->query($sqlOrgRep);
@@ -66,16 +67,18 @@
         if($user -> num_rows > 0){
             $userFlag = 1;
 
-            $sqlapplicant = "SELECT * FROM APPLICANT WHERE email = '$email'";
-            $applicant = $connection->query($sqlUser);
+            $sqlapplicant = "SELECT * FROM APPLICANT WHERE email = '$emailvalue'";
+            $applicant = $connection->query($sqlapplicant);
             if($applicant -> num_rows > 0){
               $applicantFlag = 1;
-            }
+              echo 'wrong';
+            } 
             
-            $sqlorgrep = "SELECT * FROM ORGANIZATIONREP WHERE email = '$email'";
-            $orgrep = $connection->query($sqlUser);
+            $sqlorgrep = "SELECT * FROM ORGANIZATIONREP WHERE email = '$emailvalue'";
+            $orgrep = $connection->query($sqlorgrep);
             if($orgrep -> num_rows > 0){
               $orgFlag = 1;
+              echo 'success';
             }
         //}else if($rep -> num_rows > 0) {
         //    $orgFlag = 1;
@@ -92,8 +95,8 @@
             $_SESSION['applicantPassword'] = $password;
             header("location: appeals.php");
         } else if($orgFlag == 1){
-            $_SESSION['repUsername'] = $username;
-            $_SESSION['repPassword'] = $password;
+            $_SESSION['repEmail'] = $emailvalue;
+            //$_SESSION['repPassword'] = $password;
             header("location: orgRegisterApplicant.php");
         } 
         else if($adminFlag == 1){
