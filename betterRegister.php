@@ -69,7 +69,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             }
               $username = strtok($fullname,  ' ').$randomNumber;
               $password = substr($fullname,0,3).$randomNumber;
-              $sqlQuery = "INSERT INTO APPLICANT VALUES ('$username', '$password', '$fullname', '$email', '$mobileNo', '$idNo', '$address', '$householdIncome', '$applicantID', '$organization')";
+              $sqluser = "INSERT INTO USER VALUES ('$username','$password', '$fullname', '$email', '$mobileNo')";
+              $sqlQuery = "INSERT INTO APPLICANT VALUES ('$email', '$idNo', '$address', '$householdIncome', '$applicantID', '$organization')";
               
             $docquery = "SELECT * FROM DOCUMENT";
             $stt = $connection->prepare($docquery);
@@ -81,7 +82,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
               
             $doc = "INSERT INTO DOCUMENT VALUES ('$documentID', '$file', '$description', '$applicantID')";
 			      $result = $connection -> query($sqlQuery);
-            $docresult = $connection -> query($doc);                      //execute query (php)
+            $docresult = $connection -> query($doc);
+            $userresult = $connection -> query($sqluser);                      //execute query (php)
 				    if ($result == TRUE && $docresult == TRUE){                   //check status of query
               header("location: betterLogin.php");
                 die;
