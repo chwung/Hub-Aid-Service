@@ -13,6 +13,14 @@
         $query = "SELECT * FROM organization";
         $data = $connection->query($query);
 
+        $queryy = "SELECT * FROM ORGANIZATION";
+        $stmt = $connection->prepare($queryy);
+        $stmt->execute();
+        $stmt->store_result();
+        $orgCount = $stmt -> num_rows;
+
+        $orgID = 'B'.substr(str_repeat(0,4).$orgCount+1, -4);
+
         if($data -> num_rows > 0){                        
             while ($row = $data -> fetch_assoc()) {
                 if ($orgName == $row["orgName"]){
@@ -27,7 +35,9 @@
             
 
         }else{
-            $sqlQuery = "INSERT INTO `organization`(`orgID`, `orgName`, `orgAddress`) VALUES ('orgID', '$orgName', '$orgAddress')";
+            
+
+            $sqlQuery = "INSERT INTO `organization`(`orgID`, `orgName`, `orgAddress`) VALUES ('$orgID', '$orgName', '$orgAddress')";
             $result = $connection -> query($sqlQuery);  //execute query (php)
 
             echo '<script type="text/javascript">';
@@ -105,13 +115,31 @@
             </select>
             <Script>
                         function displaylist(){
-                            
-                            document.getElementById("nameOrganization").style.visibility= "visible"; 
-                            document.getElementById("listRep").style.visibility= "visible"; 
-                            
+
                             var organization = document.getElementById("choose");
                             var displayText = organization.options[organization.selectedIndex].text;
-                            document.getElementById("nameOrganization").value = displayText;
+                            document.getElementById("nameOrganization").innerHTML = displayText;
+                            
+                            <?php
+
+                            
+
+
+                            $query = "SELECT * FROM organization";
+                            $data = $connection->query($query);
+                    
+                            if($data -> num_rows > 0){                        
+                                while ($row = $data -> fetch_assoc()) {
+                                    if ($orgName == $row["orgName"]){
+                                        $flag = 1;
+                                        }
+                                }
+                            }
+
+                            ?>
+
+                            document.getElementById("nameOrganization").style.visibility= "visible"; 
+                            document.getElementById("listRep").style.visibility= "visible"; 
                             
 
                         }
