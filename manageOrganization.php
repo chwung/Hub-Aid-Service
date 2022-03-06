@@ -100,7 +100,7 @@
             
             <br>
             <select id="choose" class="m-2 w-50" name ="choose" onchange ="displaylist()">
-                    <option >--Choose a Organization--</option>
+                    <option selected disabled>--Choose a Organization--</option>
                     <?php
                                     $query = "SELECT * FROM ORGANIZATION";
                                     $data = $connection -> query($query);
@@ -108,12 +108,14 @@
                                         while($org = $data -> fetch_assoc()){
                                             $orgName = $org['orgName'];
                                             $orgID = $org['orgID'];
-                                            echo "<option value='$orgName'>";
+                                            echo "<option value='$orgName' href='manageOrganization.php?orgID=$orgID'>";
                                             echo "$orgID"; 
                                             echo '</option>';
                 
                                         }
                                     }
+
+                                    
 
                     ?>
             </select>
@@ -123,8 +125,15 @@
                             var organization = document.getElementById("choose");
                             var displayText = organization.options[organization.selectedIndex].value;
                             var displayID = organization.options[organization.selectedIndex].text;
+                            document.getElementById("nameOrganization").style.marginLeft = "100px";
+                            document.getElementById("nameOrganization").style.textAlign = "center";
                             document.getElementById("nameOrganization").innerHTML = displayText;
                             document.getElementById("idOrg").value = displayID;
+                            
+
+                            <?php
+                                
+                            ?>
 
                             document.getElementById("nameOrganization").style.visibility= "visible"; 
                             document.getElementById("listRep").style.visibility= "visible"; 
@@ -174,7 +183,7 @@
 
 
             
-            <p1 class="m-5 font-weight-bolder" id="nameOrganization" style="visibility: hidden;"> &emsp;&emsp;&nbsp; Organization Name</p1>
+            <p1 class="font-weight-bolder" id="nameOrganization" style="visibility: hidden;">  Organization Name</p1>
             <br>
             <div class="card m-2" style="width: 20rem; visibility: hidden;" id="listRep">
             <div class="card-body bg-light rounded" style="background: #FF416C;
@@ -183,20 +192,19 @@
                 <h5 class="card-title text-white">Organization Representatives</h5>
                 <div class="list-group">
                     <?php
-                        $idOrg = $_POST['idOrg'];
-                        $query = "SELECT * from organizationrep WHERE orgID = '$idOrg'";
-                        $data = $connection->query($query);
+                        $query = "SELECT * FROM organizationrep";
+                        $data = $connection -> query($query);
                         if($data -> num_rows > 0){
-                            while($rep_data = $data -> fetch_assoc()){
+                            while($rep = $data -> fetch_assoc()){
+                                $orgEmail = $rep['email'];
                                 echo '<a href="#" class="list-group-item list-group-item-action">';
-                                echo "$idOrg";
+                                echo "$orgEmail"; 
                                 echo '</a>';
                             }
                         }
+
+                      
                     ?>
-                    <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
-                    <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
-                    <a href="#" class="list-group-item list-group-item-action">Organization Rep</a>
                 </div>
                 <button type="submit" name="ok" class="m-2 float-right btn btn-primary" onclick="displayform()" >Add New Rep</button>
             </div>
@@ -254,7 +262,7 @@ if(isset($_POST['confirm'])){
     $fullName = $_POST['fullName'];
     $mobileNo = $_POST['mobileNo'];
     $email = $_POST['email'];
-    $jobTittle = $_POST['fullName'];
+    $jobTittle = $_POST['jobTittle'];
     $idOrg = $_POST['idOrg'];
 
     $flag = 0;
