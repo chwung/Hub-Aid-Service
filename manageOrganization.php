@@ -131,7 +131,14 @@
                             document.getElementById("idOrg").value = displayID;
 
                             document.getElementById("nameOrganization").style.visibility= "visible";
-                            document.getElementById("orgRepForm").style.visibility= "visible";  
+                            document.getElementById("name").disabled = false;
+                            document.getElementById("fullName").disabled = false;
+                            document.getElementById("mobileNo").disabled = false;
+                            document.getElementById("email").disabled = false;
+                            document.getElementById("jobTitle").disabled = false;
+                            document.getElementById("confirm").disabled = false;
+                            
+                        
 
                         }
 
@@ -180,7 +187,7 @@
         <div class="col-lg-6">
             <p1 class="font-weight-bolder" id="nameOrganization" style="visibility: hidden;">  Organization Name</p1>
             <br>
-            <div class="card m-2" style="width: 30rem; visibility: hidden;" id="orgRepForm">
+            <div class="card m-2" style="width: 30rem;" id="orgRepForm">
             <div class="card-body bg-light rounded " style="background: #FF416C;
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
@@ -189,26 +196,26 @@
                     <input type="text" id="idOrg" name="idOrg" size="50" maxlength="20" placeholder="ID" style="visibility: hidden;">
                     <div class="mb-4">
                         <label for="name" class="form-label font-weight-bold text-white">Username: </label>
-                        <input type="text" id="name" name="name" class="form-control" size="50" maxlength="20" placeholder="Username" required>
+                        <input type="text" id="name" name="name" class="form-control" size="50" maxlength="20" placeholder="Username" required disabled>
                     </div>
                     <div class="mb-4">
                         <label for="fullname" class="form-label font-weight-bold text-white">Full Name: </label>
-                        <input type="text" id="fullName" name="fullName"  class="form-control" size="50" maxlength="30" placeholder="Full Name" required>
+                        <input type="text" id="fullName" name="fullName"  class="form-control" size="50" maxlength="30" placeholder="Full Name" required disabled>
                     </div>
                     <div class="mb-4">
                         <label for="mobileNo" class="form-label font-weight-bold text-white">Mobile No: </label>
-                        <input type="text" id="mobileNo" name="mobileNo" class="form-control" maxlength="11"  placeholder="012-412-6588/0124126588" required>
+                        <input type="text" id="mobileNo" name="mobileNo" class="form-control" maxlength="11"  placeholder="012-412-6588/0124126588" required disabled>
                     </div>
                     <div class="mb-4">
                         <label for="email" class="form-label font-weight-bold text-white">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" size="50" maxlength="40" pattern=".+@.+\.com" placeholder="Email@gmail.com" required>
+                        <input type="email" id="email" name="email" class="form-control" size="50" maxlength="40" pattern=".+@.+\.com" placeholder="Email@gmail.com" required disabled>
                     </div>
                     <div class="mb-4">
                         <label for="jobTitle" class="form-label font-weight-bold text-white">Job Title: </label>
-                        <input type="text" class="form-control" name="jobTitle" size="50" maxlength="20" placeholder="Job Tittle" id="jobTitle" required>
+                        <input type="text" class="form-control" name="jobTitle" size="50" maxlength="20" placeholder="Job Tittle" id="jobTitle" required disabled>
                     </div>
                     
-                    <button type="submit" name="confirm" class="m-2 float-right btn btn-primary" onclick="" >Confirm</button>
+                    <button type="submit" name="confirm" id="confirm" class="m-2 float-right btn btn-primary" disabled >Confirm</button>
                 </form>
                 
             </div>
