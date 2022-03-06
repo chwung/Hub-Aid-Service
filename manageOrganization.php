@@ -125,19 +125,13 @@
                             var organization = document.getElementById("choose");
                             var displayText = organization.options[organization.selectedIndex].value;
                             var displayID = organization.options[organization.selectedIndex].text;
-                            document.getElementById("nameOrganization").style.marginLeft = "100px";
+                            document.getElementById("nameOrganization").style.marginLeft = "180px";
                             document.getElementById("nameOrganization").style.textAlign = "center";
                             document.getElementById("nameOrganization").innerHTML = displayText;
                             document.getElementById("idOrg").value = displayID;
-                            
 
-                            <?php
-                                
-                            ?>
-
-                            document.getElementById("nameOrganization").style.visibility= "visible"; 
-                            document.getElementById("listRep").style.visibility= "visible"; 
-                            
+                            document.getElementById("nameOrganization").style.visibility= "visible";
+                            document.getElementById("orgRepForm").style.visibility= "visible";  
 
                         }
 
@@ -181,45 +175,12 @@
             </div>
             <br>
 
-
-            
+        </div>
+        
+        <div class="col-lg-6">
             <p1 class="font-weight-bolder" id="nameOrganization" style="visibility: hidden;">  Organization Name</p1>
             <br>
-            <div class="card m-2" style="width: 20rem; visibility: hidden;" id="listRep">
-            <div class="card-body bg-light rounded" style="background: #FF416C;
-            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-            background: linear-gradient(to right, #FF4B2B, #FF416C);">
-                <h5 class="card-title text-white">Organization Representatives</h5>
-                <div class="list-group">
-                    <?php
-                        $query = "SELECT * FROM organizationrep";
-                        $data = $connection -> query($query);
-                        if($data -> num_rows > 0){
-                            while($rep = $data -> fetch_assoc()){
-                                $orgEmail = $rep['email'];
-                                echo '<a href="#" class="list-group-item list-group-item-action">';
-                                echo "$orgEmail"; 
-                                echo '</a>';
-                            }
-                        }
-
-                      
-                    ?>
-                </div>
-                <button type="submit" name="ok" class="m-2 float-right btn btn-primary" onclick="displayform()" >Add New Rep</button>
-            </div>
-            </div>
-        </div>
-        <Script>
-            function displayform(){
-                document.getElementById("orgRepForm").style.visibility= "visible"; 
-             }
-
-         </Script>
-        <div class="col-lg-6">
-            
-            <br>
-            <div class="card m-2" style="width: 30rem; visibility: hidden" id="orgRepForm">
+            <div class="card m-2" style="width: 30rem; visibility: hidden;" id="orgRepForm">
             <div class="card-body bg-light rounded " style="background: #FF416C;
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
@@ -244,7 +205,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="jobTitle" class="form-label font-weight-bold text-white">Job Title: </label>
-                        <input type="text" class="form-control" name="job_title" size="50" maxlength="20" placeholder="Job Tittle" id="jobTitle" required>
+                        <input type="text" class="form-control" name="jobTitle" size="50" maxlength="20" placeholder="Job Tittle" id="jobTitle" required>
                     </div>
                     
                     <button type="submit" name="confirm" class="m-2 float-right btn btn-primary" onclick="" >Confirm</button>
@@ -262,7 +223,7 @@ if(isset($_POST['confirm'])){
     $fullName = $_POST['fullName'];
     $mobileNo = $_POST['mobileNo'];
     $email = $_POST['email'];
-    $jobTittle = $_POST['jobTittle'];
+    $jobTitle = $_POST['jobTitle'];
     $idOrg = $_POST['idOrg'];
 
     $flag = 0;
@@ -293,12 +254,12 @@ if(isset($_POST['confirm'])){
 
         
         $sqlQuery = "INSERT INTO `user`(`username`, `password`, `fullname`, `email`, `mobileNo`) VALUES ('$username','$password','$fullName', '$email','$mobileNo')";
-        $sql = "INSERT INTO `organizationrep`(`email`, `jobTitle`, `orgID`) VALUES ('$email', '$jobTittle', '$idOrg')";
+        $sql = "INSERT INTO `organizationrep`(`email`, `jobTitle`, `orgID`) VALUES ('$email', '$jobTitle', '$idOrg')";
         $result = $connection -> query($sqlQuery);  //execute query (php)
         $output = $connection -> query($sql);
 
         echo '<script type="text/javascript">';
-        echo 'alert("Organization Representative has been added.");';
+        echo 'alert("Organization Representative has been added.\nUsername: '.$username.'\nPassword: '.$password.'");';
         echo '</script>';
         
     }
