@@ -86,10 +86,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             $documentID = 'D'.substr(str_repeat(0,4).$docCount+1, -4);
               
             $doc = "INSERT INTO DOCUMENT VALUES ('$documentID', '$file', '$description', '$applicantID')";
-			      $result = $connection -> query($sqlQuery);
+			$result = $connection -> query($sqlQuery);
             $docresult = $connection -> query($doc);
             $userresult = $connection -> query($sqluser);                      //execute query (php)
-				    if ($result == TRUE && $docresult == TRUE){                   //check status of query
+				    if ($result == TRUE && $docresult == TRUE && $userresult == TRUE){                   //check status of query
                         echo '<script type="text/javascript">';
                         echo 'alert("Applicant Registered. Username: ';
                         echo $username ;
