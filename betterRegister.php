@@ -88,7 +88,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             $userresult = $connection -> query($sqluser);                      //execute query (php)
 				    if ($result == TRUE && $docresult == TRUE){                   //check status of query
               echo '<script type="text/javascript">';
-              echo 'alert("Applicant Registered.")';
+              echo 'alert("Applicant Registered. Username: '$username' Password: '$password'")';
               echo '</script>';
               echo '<script type="text/javascript">';
               echo 'window.location.href="betterLogin.php"';
