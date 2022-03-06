@@ -13,7 +13,7 @@
     <!-- sign in page -->
     <div class="form-container sign-in-container">
       <form method="POST" action="betterLogin.php" class="form" id="login">
-        <h1 class="form__title">Login</h1>
+        <h1 class="form__title">Login Here!</h1>
         <div class="form__input-group">
           <label for="username">Username: </label>
           <input type="text" class="form__input" name="username" id="username" maxlength="20" required> 
@@ -23,7 +23,7 @@
           <input type="password" class="form__input" name="password" id="password" maxlength="20" required> 
         </div>
         <div class="form__input-group">
-          <button type="submit" class="form__button">Submit</button>
+          <button type="submit" class="form__button">Login</button>
         </div>
         <a href="betterRegister.php" style="margin-top: 20px">Register as an Applicant Here</a>
      </form>
