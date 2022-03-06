@@ -33,8 +33,8 @@
    <div class="overlay-container">
 		<div class="overlay">
 			<div class="overlay-panel overlay-right">
-				<h1>Hello, Rich People!</h1>
-				<p>If you have a lot of money you can donate to some to these struggling people</p>
+				<h1>Welcome to Hub Aid Service!</h1>
+				<p>Any donations made will be sent towards helping the needy. <br> Click the button below to start donating today!</p>
 				<button class="ghost" id="signUp" onclick="location.href='appeals.php'">View Appeals</button>
 			</div>
 		</div>
