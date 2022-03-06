@@ -73,7 +73,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             <div class="mb-4">
                 
                 <select id="choose" class=" form-control" name ="choose" onchange ="myFunction()">
-                  <option >--Choose a centre--</option>
+                  <option disabled>--Choose a centre--</option>
                 
                   <?php
                     $query = "SELECT DISTINCT centre_name, centre_address FROM staffs";
