@@ -201,7 +201,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             <div class="mb-4">
               <label for="file" class="form-label font-weight-bold" style="color: white">File</label>
               <br>
-              <input type="file" id="file" name="file" class="form-control-file" required>
+              <input type="file" id="file" name="file" class="form-control-file" required multiple>
             </div>
 
             <div class="mb-4">
