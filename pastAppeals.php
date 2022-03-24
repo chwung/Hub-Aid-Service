@@ -30,7 +30,7 @@
 <div class="container">
                         <div class=" row align-items-center justify-content-center">
                             <div class="  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark rounded p-5 shadow">
-                                <h4 class=" text-light">View Batch</h4>
+                                <h4 class=" text-light">Past Appeals</h4>
                                 <div class="parent-container">
                                     <div class="container">
                                         <div class="row">
