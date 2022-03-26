@@ -57,7 +57,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <ul class="menu__list r-list">
       <li class="menu__group"><a href="orgRegisterApplicant.php" class="menu__link r-link text-underlined">Register Applicant</a></li>
       <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Aid Appeals</a></li>
-      <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Record Contribution</a></li>
+      <li class="menu__group"><a href="recordContribution.php" class="menu__link r-link text-underlined">Record Contribution</a></li>
       <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Record Disbursements</a></li>
       <li class="menu__group" style="margin-left: auto; margin-right: 0;"><a href="betterLogin.php" class="menu__link r-link text-underlined">Log out</a></li>
     </ul>
@@ -89,6 +89,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
           $orgcon = $connection->query($orgquery);
           $org = $orgcon -> fetch_assoc();
           $orgnam = $org['orgName'];
+
+          $today = date("Y-m-d");
        ?>
       <p1 class="font-weight-bolder row mt-5 align-items-center justify-content-center" id="nameOrganization" id="fullname" name="fullname"><?php echo $orgnam ?></p1>
             
@@ -101,12 +103,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             <div class="mb-4">
                 <input type="hidden" id="orgName" name="orgName" value="<?php echo $emailID ?>">
                 <label for="fromDate" class="form-label font-weight-bold" style="color: white">From Date: </label>
-                <input type="date" id="fromDate" name="fromDate" class="form-control" style="width: 100%;" required>
+                <input type="date" id="fromDate" name="fromDate" class="form-control" min="<?php echo $today ?>" style="width: 100%;" onchange ="displayDate()" required>
+              <Script>
+                        function displayDate(){
+                            var displaydate = document.getElementById("fromDate").value
+                            document.getElementById("toDate").min = displaydate;
+                        }
+            </Script>
+    
             </div>
             
             <div class="mb-4">
                 <label for="toDate" class="form-label font-weight-bold" style="color: white">To Date: </label>
                 <input type="date" id="toDate" name="toDate" class="form-control" style="width: 100%;" required>
+                
             </div>
 
             <div class="mb-4">
