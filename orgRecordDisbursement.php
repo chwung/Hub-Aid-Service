@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="tablescroll.css">
 </head>
 <nav>
 <div class="page">
@@ -35,7 +36,7 @@
     <ul class="menu__list r-list">
       <li class="menu__group"><a href="orgRegisterApplicant.php" class="menu__link r-link text-underlined">Register Applicant</a></li>
       <li class="menu__group"><a href="organizeAidAppeal.php" class="menu__link r-link text-underlined">Aid Appeals</a></li>
-      <li class="menu__group"><a href="#0" class="menu__link r-link text-underlined">Record Contribution</a></li>
+      <li class="menu__group"><a href="recordContribution.php" class="menu__link r-link text-underlined">Record Contribution</a></li>
       <li class="menu__group"><a href="orgRecordDisbursement.php" class="menu__link r-link text-underlined">Record Disbursements</a></li>
       <li class="menu__group" style="margin-left: auto; margin-right: 0;"><a href="betterLogin.php" class="menu__link r-link text-underlined">Log out</a></li>
     </ul>
@@ -48,153 +49,255 @@
         <div class="col-lg-5">
             
             <br>
+
             <h3><?php echo $orgnam ?></h3>
-            <select id="choose" class="m-2 w-50" name ="choose" onchange ="displaylist()">
+            <a href="orgRecordDisbursementSelectApplicant.php">View Applicants</a>
+
+            <form action="orgRecordDisbursement.php" method="POST">
+            <select id="choose" class="m-2 w-50" name ="choose" onchange ="this.form.submit();">
                     <option selected disabled>--Select an Appeal--</option>
                     <?php
-                                    
-                                    
-
                                     $query = "SELECT * FROM APPEAL WHERE orgID = '$emailID'";
                                     $data = $connection -> query($query);
                                     if($data -> num_rows > 0){
                                       
                                         while($org = $data -> fetch_assoc()){
                                             //$orgName = $org['orgName'];
-                                            $orgID = $org['appealID'];
+                                            $appealID = $org['appealID'];
                                             $fromDate = $org['fromDate'];
                                             $toDate = $org['toDate'];
-                                            echo "<option value='$fromDate.$toDate'>";
-                                            echo "$orgID"; 
+                                            // $fromDate.$toDate
+                                            echo "<option value='$appealID'>";
+                                            echo "$appealID"; 
                                             echo '</option>';
                                         }
                                     }
-
-                                    
-
                     ?>
             </select>
-            <Script>
-                        function displaylist(){
+            </form>
+                  <Script>
+                    function displaylist(){
 
-                          var centre = $('#choose').val().split('.')[0];
-                          var address = $('#choose').val().split('.')[1];
-                          console.log(centre);
-                          // document.getElementById("centre").value = centre;
-                          // document.getElementById("address").value = address;
+                      var centre = $('#choose').val().split('.')[0];
+                      var address = $('#choose').val().split('.')[1];
 
-                            var organization = document.getElementById("choose");
-                            var displayText = organization.options[organization.selectedIndex].value;
-                            var displayID = organization.options[organization.selectedIndex].text;
-                            document.getElementById("nameOrganization").style.marginLeft = "180px";
-                            document.getElementById("nameOrganization").style.textAlign = "center";
-                            document.getElementById("nameOrganization").innerHTML = centre;
-                            document.getElementById("idOrg").value = displayID;
+                        document.getElementById("fromDate").innerHTML = centre;
+                        document.getElementById("toDate").innerHTML = address;
+                        document.getElementById("idOrg").value = displayID;
+                    }
+                  </Script>
 
-                            document.getElementById("nameOrganization").style.visibility= "visible";
-                            document.getElementById("name").disabled = false;
-                            document.getElementById("fullName").disabled = false;
-                            document.getElementById("mobileNo").disabled = false;
-                            document.getElementById("email").disabled = false;
-                            document.getElementById("jobTitle").disabled = false;
-                            document.getElementById("confirm").disabled = false;
-                            
-                        
+              <div class="col-lg-6">
+                <?php
+                  if($_SERVER['REQUEST_METHOD'] == "POST"){
+                    $thing = $_POST['choose'];
+                    $query = "SELECT * FROM APPEAL WHERE appealID = '$thing'";
+                    $data = $connection -> query($query);
+                      if($data -> num_rows > 0){
+                          while($yes = $data -> fetch_assoc()){
+                            $from = $yes['fromDate'];
+                            $to = $yes['toDate'];
 
-                        }
-
-            </Script>
-            
-        <div class="col-lg-6">
-            <p1 class="font-weight-bolder" id="nameOrganization" style="visibility: hidden;">  Organization Name</p1>
-            <br>
-            <div class="card m-2" style="width: 30rem;" id="orgRepForm">
-            <div class="card-body bg-light rounded " style="background: #FF416C;
-            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-            background: linear-gradient(to right, #FF4B2B, #FF416C);">
-                <h5 class="card-title text-white text-center">Add New Representative</h5>
-                <form method="POST">
-                    <input type="text" id="idOrg" name="idOrg" size="50" maxlength="20" placeholder="ID" style="visibility: hidden;">
-                    <div class="mb-4">
-                        <label for="name" class="form-label font-weight-bold text-white">Username: </label>
-                        <input type="text" id="name" name="name" class="form-control" size="50" maxlength="20" placeholder="Username" required disabled>
-                    </div>
-                    <div class="mb-4">
-                        <label for="fullname" class="form-label font-weight-bold text-white">Full Name: </label>
-                        <input type="text" id="fullName" name="fullName"  class="form-control" size="50" maxlength="30" placeholder="Full Name" required disabled>
-                    </div>
-                    <div class="mb-4">
-                        <label for="mobileNo" class="form-label font-weight-bold text-white">Mobile No: </label>
-                        <input type="text" id="mobileNo" name="mobileNo" class="form-control" maxlength="11"  placeholder="012-412-6588/0124126588" required disabled>
-                    </div>
-                    <div class="mb-4">
-                        <label for="email" class="form-label font-weight-bold text-white">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" size="50" maxlength="40" pattern=".+@.+\.com" placeholder="Email@gmail.com" required disabled>
-                    </div>
-                    <div class="mb-4">
-                        <label for="jobTitle" class="form-label font-weight-bold text-white">Job Title: </label>
-                        <input type="text" class="form-control" name="jobTitle" size="50" maxlength="20" placeholder="Job Tittle" id="jobTitle" required disabled>
-                    </div>
-                    
-                    <button type="submit" name="confirm" id="confirm" class="m-2 float-right btn btn-primary" disabled >Confirm</button>
-                </form>
-                
-            </div>
-            </div>
+                            echo "<div class='row'>";
+                            echo "<h1>From Date: </h1> <h2 id='fromDate' style='text-indent: 10px'>$from</h2> <br>";
+                            echo "</div>";
+                            echo "<div class='row'>";
+                            echo "<h1>To Date: </h1> <h2 id='toDate' style='text-indent: 10px'>$to</h2>";
+                            echo "</div>";
+                          }
+                      }
+                  }
+                ?>
+              </div>
+          
         </div>
     </div>
 </div>
+<div class="container">
+                        <div class=" row align-items-center justify-content-center">
+                            <div class="  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark rounded p-5 shadow">
+                                <h4 class=" text-light">Goods</h4>
+                                <div class="parent-container">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-light table-container">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">No.</th>
+                                                        <th scope="col">Received Date</th>
+                                                        <th scope="col">Contribution ID</th>
+                                                        <th scope="col">Description</th>
+                                                        <th scope="col">Estimated Value</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    
+                                                    <?php
+                                                    if($_SERVER['REQUEST_METHOD'] == "POST"){
+                                                      $thing = $_POST['choose'];
+                                                      // echo '<script type="text/javascript">';
+                                                      // echo "alert('$emailID')";
+                                                      // echo '</script>';
 
-<?php
-if(isset($_POST['confirm'])){
+                                                      $query = "SELECT * FROM contribution WHERE appealID = '$thing'";
+                                                    $contribution = $connection->query($query);
+                                                    if($contribution -> num_rows > 0)
+                                                    {
+                                                       $row = 1;
+                                                           while($contribution_data = $contribution -> fetch_assoc()){
+                                                            $contributionID = $contribution_data['contributionID'];
+                                                            $receivedDate = $contribution_data['receivedDate'];
+                                                            $good = "SELECT * FROM goods WHERE contributionID = '$contributionID'";
+                                                            $goods = $connection->query($good);
+                                                            if($goods -> num_rows > 0)
+                                                            {
+                                                                while($goods_data = $goods -> fetch_assoc()){
+                                                                  $conID = $goods_data['contributionID'];
+                                                                  $description = $goods_data['description'];
+                                                                  $estimatedValue = $goods_data['estimatedValue'];
+                                                                  
+                                                                  echo '<tr>';
+                                                                  
+                                                                  echo "<td>";
+                                                                  echo "$row";
+                                                                  echo "</td>";
 
-    $username = $_POST['name'];
-    $fullName = $_POST['fullName'];
-    $mobileNo = $_POST['mobileNo'];
-    $email = $_POST['email'];
-    $jobTitle = $_POST['jobTitle'];
-    $idOrg = $_POST['idOrg'];
+                                                                  echo "<td>";
+                                                                  echo "$receivedDate";
+                                                                  echo "</td>";
 
-    $flag = 0;
+                                                                  echo "<td>";
+                                                                  echo "$conID";
+                                                                  echo "</td>";
 
-    $query = "SELECT * FROM USER";
-    $data = $connection->query($query);
-    $collection = "SELECT * FROM ORGANIZATIONREP";
-    $collect = $connection->query($collection);
+                                                                  echo "<td>";
+                                                                  echo "$description";
+                                                                  echo "</td>";
 
+                                                                  echo "<td>";
+                                                                  echo "$estimatedValue";
+                                                                  echo "</td>";
 
-    if($data -> num_rows > 0){                        
-        while ($row = $data -> fetch_assoc()) {
-            if ($email == $row["email"]){
-                $flag = 1;
-                }
-        }
-    }
-    if ($flag == 1){                                  
-        echo '<script type="text/javascript">';
-        echo 'alert("Organization Representative already exists.");';
-        echo '</script>';
-        
+                                                                  echo '</tr>';
+                                                                  $row++;
+                                                                }
+                                                            }
+                                                          }
+                                                        }
+                                                    }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                        
+                            </div>
+                    
+                        </div>
+                    </div>
+                </main>  
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+                        <div class=" row align-items-center justify-content-center">
+                            <div class="  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark rounded p-5 shadow">
+                                <h4 class=" text-light">Cash Donations</h4>
+                                <div class="parent-container">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-light table-container">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">No.</th>
+                                                        <th scope="col">Received Date</th>
+                                                        <th scope="col">Contribution ID</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Payment Channel</th>
+                                                        <th scope="col">Reference No</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    
+                                                    <?php
+                                                    if($_SERVER['REQUEST_METHOD'] == "POST"){
+                                                      $thing = $_POST['choose'];
+                                                      // echo '<script type="text/javascript">';
+                                                      // echo "alert('$emailID')";
+                                                      // echo '</script>';
 
-    }else{
-        $randomNumber = rand(100,999);
-        $password = substr($fullName,0,3).$randomNumber;
+                                                      $query = "SELECT * FROM contribution WHERE appealID = '$thing'";
+                                                    $contribution = $connection->query($query);
+                                                    if($contribution -> num_rows > 0)
+                                                    {
+                                                       $row = 1;
+                                                           while($contribution_data = $contribution -> fetch_assoc()){
+                                                            $contributionID = $contribution_data['contributionID'];
+                                                            $receivedDate = $contribution_data['receivedDate'];
+                                                            $cashdonation = "SELECT * FROM cashdonation WHERE contributionID = '$contributionID'";
+                                                            $cashdona = $connection->query($cashdonation);
+                                                            if($cashdona -> num_rows > 0)
+                                                            {
+                                                                while($cash_data = $cashdona -> fetch_assoc()){
+                                                                  $conID = $cash_data['contributionID'];
+                                                                  $amount = $cash_data['amount'];
+                                                                  $channel = $cash_data['paymentChannel'];
+                                                                  $refer = $cash_data['referenceNo'];
+                                                                              
+                                                                  echo '<tr>';
+                                                                  
+                                                                  echo "<td>";
+                                                                  echo "$row";
+                                                                  echo "</td>";
 
+                                                                  echo "<td>";
+                                                                  echo "$receivedDate";
+                                                                  echo "</td>";
 
-        
-        $sqlQuery = "INSERT INTO `user`(`username`, `password`, `fullname`, `email`, `mobileNo`) VALUES ('$username','$password','$fullName', '$email','$mobileNo')";
-        $sql = "INSERT INTO `organizationrep`(`email`, `jobTitle`, `orgID`) VALUES ('$email', '$jobTitle', '$idOrg')";
-        $result = $connection -> query($sqlQuery);  //execute query (php)
-        $output = $connection -> query($sql);
+                                                                  echo "<td>";
+                                                                  echo "$conID";
+                                                                  echo "</td>";
 
-        echo '<script type="text/javascript">';
-        echo 'alert("Organization Representative has been added.\nUsername: '.$username.'\nPassword: '.$password.'");';
-        echo '</script>';
-        
-    }
+                                                                  echo "<td>";
+                                                                  echo "$amount";
+                                                                  echo "</td>";
 
-}
-?>
+                                                                  echo "<td>";
+                                                                  echo "$channel";
+                                                                  echo "</td>";
+
+                                                                  echo "<td>";
+                                                                  echo "$refer";
+                                                                  echo "</td>";
+
+                                                                  echo '</tr>';
+                                                                  $row++;
+                                                                }
+                                                            }
+                                                          }
+                                                        }
+                                                    }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                        
+                            </div>
+                    
+                        </div>
+                    </div>
+                </main>  
+            </div>
+        </div>
+    </div>
 </body>      
                     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
