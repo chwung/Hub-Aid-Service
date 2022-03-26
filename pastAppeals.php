@@ -42,6 +42,7 @@
                                                         <th scope="col">From Date</th>
                                                         <th scope="col">To Date</th>
                                                         <th scope="col">Description</th>
+                                                        <th scope="col">Outcome</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -110,6 +111,16 @@
                                                             echo "&appealID=$appealID'";
                                                             echo ' class="mb-0 text-center text-decoration-none text-dark">';
                                                             echo "$description";
+                                                            echo '</a>';
+                                                            echo "</td>";
+
+                                                            echo '<td>';
+                                                            echo "<a href='pastAppOrg.php"; 
+                                                            echo "?orgName=$name";
+                                                            echo "&orgAddress=$address";
+                                                            echo "&appealID=$appealID'";
+                                                            echo ' class="mb-0 text-center text-decoration-none text-dark">';
+                                                            echo "$outcome";
                                                             echo '</a>';
                                                             echo "</td>";
 
