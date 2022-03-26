@@ -3,6 +3,7 @@
 
     include ("dbcon.php");
 
+
     if(isset($_POST['submit'])){
 
         $orgName = $_POST['orgName'];
@@ -192,7 +193,7 @@
             background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
             background: linear-gradient(to right, #FF4B2B, #FF416C);">
                 <h5 class="card-title text-white text-center">Add New Representative</h5>
-                <form method="POST">
+                <form method="POST" action="phpMailer.php">
                     <input type="text" id="idOrg" name="idOrg" size="50" maxlength="20" placeholder="ID" style="visibility: hidden;">
                     <div class="mb-4">
                         <label for="name" class="form-label font-weight-bold text-white">Username: </label>
@@ -223,56 +224,7 @@
         </div>
     </div>
 </div>
-<?php
-if(isset($_POST['confirm'])){
 
-    $username = $_POST['name'];
-    $fullName = $_POST['fullName'];
-    $mobileNo = $_POST['mobileNo'];
-    $email = $_POST['email'];
-    $jobTitle = $_POST['jobTitle'];
-    $idOrg = $_POST['idOrg'];
-
-    $flag = 0;
-
-    $query = "SELECT * FROM USER";
-    $data = $connection->query($query);
-    $collection = "SELECT * FROM ORGANIZATIONREP";
-    $collect = $connection->query($collection);
-
-
-    if($data -> num_rows > 0){                        
-        while ($row = $data -> fetch_assoc()) {
-            if ($email == $row["email"]){
-                $flag = 1;
-                }
-        }
-    }
-    if ($flag == 1){                                  
-        echo '<script type="text/javascript">';
-        echo 'alert("Organization Representative already exists.");';
-        echo '</script>';
-        
-
-    }else{
-        $randomNumber = rand(100,999);
-        $password = substr($fullName,0,3).$randomNumber;
-
-
-        
-        $sqlQuery = "INSERT INTO `user`(`username`, `password`, `fullname`, `email`, `mobileNo`) VALUES ('$username','$password','$fullName', '$email','$mobileNo')";
-        $sql = "INSERT INTO `organizationrep`(`email`, `jobTitle`, `orgID`) VALUES ('$email', '$jobTitle', '$idOrg')";
-        $result = $connection -> query($sqlQuery);  //execute query (php)
-        $output = $connection -> query($sql);
-
-        echo '<script type="text/javascript">';
-        echo 'alert("Organization Representative has been added.\nUsername: '.$username.'\nPassword: '.$password.'");';
-        echo '</script>';
-        
-    }
-
-}
-?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
