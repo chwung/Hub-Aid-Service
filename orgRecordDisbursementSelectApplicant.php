@@ -16,6 +16,8 @@
     $orgnam = $org['orgName'];
 
     $today = date("Y-m-d");
+
+    $appealID = $_GET['appealID'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -150,6 +152,8 @@ if(isset($_POST['confirm'])){
     $good = $_POST['goods'];
     $id = $_POST['IDno'];
 
+    //update appeal outcome
+
     $queryy = "SELECT * FROM DISBURSEMENT";
     $stmt = $connection->prepare($queryy);
     $stmt->execute();
@@ -158,11 +162,16 @@ if(isset($_POST['confirm'])){
 
     $disbursementID = 'D'.substr(str_repeat(0,4).$disbursementCount+1, -4);
 
-    $sqlQuery = "INSERT INTO DISBURSEMENT VALUES ('$date','$cash','$good', '$appeal','$disbursementID', '$id')";
+    $sqlQuery = "INSERT INTO DISBURSEMENT VALUES ('$date','$cash','$good', '$appealID','$disbursementID', '$id')";
     $result = $connection -> query($sqlQuery);  //execute query (php)
 
+    $inactive = "Inactive";
+    //update appeal outcome
+    $update = "UPDATE APPEAL set OUTCOME = '$inactive' WHERE appealID = '$appealID'";
+    $result = $connection -> query($update);  //execute query (php)
+
     echo '<script type="text/javascript">';
-    echo "alert('Disbursement for Appeal $appeal create');";
+    echo "alert('Disbursement for Appeal $appealID create');";
     echo '</script>';
 }
 ?>

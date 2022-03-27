@@ -50,28 +50,46 @@
             
             <br>
 
-            <h3><?php echo $orgnam ?></h3>
-            <a href="orgRecordDisbursementSelectApplicant.php">View Applicants</a>
+            <h1><?php echo $orgnam ?></h1>
+            <!-- disable link if no contributions made -->
+            <?php  
+              if($_SERVER['REQUEST_METHOD'] == "POST"){
+                $thing = $_POST['choose'];
+                // echo '<script type="text/javascript">';
+                // echo "alert('$emailID')";
+                // echo '</script>';
 
+                $query = "SELECT * FROM contribution WHERE appealID = '$thing'";
+              $contribution = $connection->query($query);
+              if($contribution -> num_rows > 0)
+              {
+                echo '<a href="orgRecordDisbursementSelectApplicant.php';
+                echo "?appealID=$thing";
+                echo '">';
+                echo "View Applicants";
+                echo "</a>";
+              }
+            }
+            ?>
             <form action="orgRecordDisbursement.php" method="POST">
             <select id="choose" class="m-2 w-50" name ="choose" onchange ="this.form.submit();">
                     <option selected disabled>--Select an Appeal--</option>
                     <?php
-                                    $query = "SELECT * FROM APPEAL WHERE orgID = '$emailID'";
-                                    $data = $connection -> query($query);
-                                    if($data -> num_rows > 0){
-                                      
-                                        while($org = $data -> fetch_assoc()){
-                                            //$orgName = $org['orgName'];
-                                            $appealID = $org['appealID'];
-                                            $fromDate = $org['fromDate'];
-                                            $toDate = $org['toDate'];
-                                            // $fromDate.$toDate
-                                            echo "<option value='$appealID'>";
-                                            echo "$appealID"; 
-                                            echo '</option>';
-                                        }
-                                    }
+                      $active = "Active";
+                      $query = "SELECT * FROM APPEAL WHERE orgID = '$emailID' AND outcome ='$active'";
+                      $data = $connection -> query($query);
+                      if($data -> num_rows > 0){
+                          while($org = $data -> fetch_assoc()){
+                              //$orgName = $org['orgName'];
+                              $appealID = $org['appealID'];
+                              $fromDate = $org['fromDate'];
+                              $toDate = $org['toDate'];
+                              // $fromDate.$toDate
+                              echo "<option value='$appealID'>";
+                              echo "$appealID"; 
+                              echo '</option>';
+                          }
+                      }
                     ?>
             </select>
             </form>
@@ -87,7 +105,7 @@
                     }
                   </Script>
 
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <?php
                   if($_SERVER['REQUEST_METHOD'] == "POST"){
                     $thing = $_POST['choose'];
@@ -99,10 +117,10 @@
                             $to = $yes['toDate'];
 
                             echo "<div class='row'>";
-                            echo "<h1>From Date: </h1> <h2 id='fromDate' style='text-indent: 10px'>$from</h2> <br>";
+                            echo "<h1>From Date: </h1> <h1 id='fromDate' style='text-indent: 10px'>$from</h1> <br>";
                             echo "</div>";
                             echo "<div class='row'>";
-                            echo "<h1>To Date: </h1> <h2 id='toDate' style='text-indent: 10px'>$to</h2>";
+                            echo "<h1>To Date: </h1> <h1 id='toDate' style='text-indent: 10px'>$to</h1>";
                             echo "</div>";
                           }
                       }

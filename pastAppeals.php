@@ -27,7 +27,7 @@
     </ul>
   </nav>
 </div>
-<div class="container">
+<div class="container mt-5">
                         <div class=" row align-items-center justify-content-center">
                             <div class="  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark rounded p-5 shadow">
                                 <h4 class=" text-light">Past Appeals</h4>
@@ -48,7 +48,7 @@
                                                     <tbody>
                                                     
                                                     <?php
-                                                    $query = "SELECT * FROM appeal WHERE toDate < CURDATE()";
+                                                    $query = "SELECT * FROM appeal WHERE toDate < CURDATE() OR outcome = 'Inactive'";
                                                     $appeal = $connection->query($query);
                                                     if($appeal -> num_rows > 0)
                                                     {

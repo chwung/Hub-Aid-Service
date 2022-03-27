@@ -27,7 +27,7 @@
     </ul>
   </nav>
 </div>
-<div class="container">
+<div class="container mt-5">
                         <div class=" row align-items-center justify-content-center">
                             <div class="  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark rounded p-5 shadow">
                                 <h4 class=" text-light">Current Appeals</h4>
@@ -49,6 +49,7 @@
                                                     <?php
                                                     $query = "SELECT * FROM appeal WHERE toDate >= CURDATE()";
                                                     $appeal = $connection->query($query);
+                                                    $active = "Active";
                                                     if($appeal -> num_rows > 0)
                                                     {
                                                        $row = 1;
@@ -71,50 +72,54 @@
                                                             $name = $org_data['orgName'];
                                                             $address = $org_data['orgAddress'];
                                                             
-                                                            echo '<tr>';
+                                                            //if active
+                                                            if ($outcome == "Active"){
+                                                                echo '<tr>';
                                                             
-                                                            echo '<td>';
-                                                            echo "<a href='currAppOrg.php"; 
-                                                            echo "?orgName=$name";
-                                                            echo "&orgAddress=$address";
-                                                            echo "&appealID=$appealID'";
-                                                            echo ' class="mb-0 text-center text-decoration-none text-dark">';
-                                                            echo "$row";
-                                                            echo '</a>';
-                                                            echo "</td>";
-
-                                                            echo "<td>";
-                                                            echo "<a href='currAppOrg.php"; 
-                                                            echo "?orgName=$name";
-                                                            echo "&orgAddress=$address";
-                                                            echo "&appealID=$appealID'";
-                                                            echo ' class="mb-0 text-center text-decoration-none text-dark">';
-                                                            echo "$from_date";
-                                                            echo '</a>';
-                                                            echo "</td>";
-
-                                                            echo "<td>";
-                                                            echo "<a href='currAppOrg.php"; 
-                                                            echo "?orgName=$name";
-                                                            echo "&orgAddress=$address";
-                                                            echo "&appealID=$appealID'";
-                                                            echo ' class="mb-0 text-center text-decoration-none text-dark">';
-                                                            echo "$to_date";
-                                                            echo '</a>';
-                                                            echo "</td>";
-
-                                                            echo "<td>";
-                                                            echo "<a href='currAppOrg.php"; 
-                                                            echo "?orgName=$name";
-                                                            echo "&orgAddress=$address";
-                                                            echo "&appealID=$appealID'";
-                                                            echo ' class="mb-0 text-center text-decoration-none text-dark">';
-                                                            echo "$description";
-                                                            echo '</a>';
-                                                            echo "</td>";
-
-                                                            echo '</tr>';
-                                                            $row++;
+                                                                echo '<td>';
+                                                                echo "<a href='currAppOrg.php"; 
+                                                                echo "?orgName=$name";
+                                                                echo "&orgAddress=$address";
+                                                                echo "&appealID=$appealID'";
+                                                                echo ' class="mb-0 text-center text-decoration-none text-dark">';
+                                                                echo "$row";
+                                                                echo '</a>';
+                                                                echo "</td>";
+    
+                                                                echo "<td>";
+                                                                echo "<a href='currAppOrg.php"; 
+                                                                echo "?orgName=$name";
+                                                                echo "&orgAddress=$address";
+                                                                echo "&appealID=$appealID'";
+                                                                echo ' class="mb-0 text-center text-decoration-none text-dark">';
+                                                                echo "$from_date";
+                                                                echo '</a>';
+                                                                echo "</td>";
+    
+                                                                echo "<td>";
+                                                                echo "<a href='currAppOrg.php"; 
+                                                                echo "?orgName=$name";
+                                                                echo "&orgAddress=$address";
+                                                                echo "&appealID=$appealID'";
+                                                                echo ' class="mb-0 text-center text-decoration-none text-dark">';
+                                                                echo "$to_date";
+                                                                echo '</a>';
+                                                                echo "</td>";
+    
+                                                                echo "<td>";
+                                                                echo "<a href='currAppOrg.php"; 
+                                                                echo "?orgName=$name";
+                                                                echo "&orgAddress=$address";
+                                                                echo "&appealID=$appealID'";
+                                                                echo ' class="mb-0 text-center text-decoration-none text-dark">';
+                                                                echo "$description";
+                                                                echo '</a>';
+                                                                echo "</td>";
+    
+                                                                echo '</tr>';
+                                                                $row++;
+                                                            }
+                                                            
                                                           }
                                                         }
                                                     ?>
