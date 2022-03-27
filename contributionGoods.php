@@ -255,7 +255,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
                                         </div>
                                         <div class="row justify-content-center">
                                             <div class="col-12">
-                                                <div class="input-group"> <input type="number" name="amount" placeholder="RM100" min='1' step=0.01 required> <label>Amount</label> </div>
+                                                <div class="input-group"> <input name="amount" placeholder="RM100" type=number min=1 step=0.01 required> <label>Amount</label> </div>
                                             </div>
                                         </div>
                                         <div class="row justify-content-center">
