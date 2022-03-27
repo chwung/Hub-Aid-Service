@@ -153,8 +153,8 @@
             <div class="modal fade" id="addOrganizationModal" tabindex="-1" role="dialog" aria-labelledby="addOrganizationLabel" aria-hidden="true" >
                 <div class="modal-dialog modal-dialog-centered" role="document" >
                 <div class="modal-content" style="background: #FF416C;
-            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-            background: linear-gradient(to right, #FF4B2B, #FF416C);">
+                    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+                    background: linear-gradient(to right, #FF4B2B, #FF416C);">
                     <div class="modal-header">
                     <h5 class="modal-title text-white" id="addOrganizationLabel">Add New Organization</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

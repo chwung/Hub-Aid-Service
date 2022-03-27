@@ -75,7 +75,13 @@
                                 $findData = $connection -> query($find);
                                 $applicant2 = $findData -> fetch_assoc();
                                 $fullname = $applicant2['fullname'];
-                                echo "<option value='$fullname/$appAdd/$appInc/$IDno'>";
+
+                                $doc = "SELECT * FROM document WHERE applicantID = '$appID'";
+                                $docData = $connection -> query($doc);
+                                $doccy = $docData -> fetch_assoc();
+                                $file = $doccy['filename'];
+
+                                echo "<option value='$fullname/$appAdd/$appInc/$IDno/$file'>";
                                 echo "$appID"; 
                                 echo '</option>';
                             }
@@ -89,6 +95,7 @@
                           var appAdd = $('#choose').val().split('/')[1];
                           var income = $('#choose').val().split('/')[2];
                           var id = $('#choose').val().split('/')[3];
+                          var file = $('#choose').val().split('/')[4];
                           var appID = $("#choose option:selected").text();
                           // document.getElementById("centre").value = centre;
                           // document.getElementById("address").value = address;
@@ -101,6 +108,7 @@
                             document.getElementById("income").innerHTML = income;
                             document.getElementById("appealID").value = appID;
                             document.getElementById("IDno").value = id;
+                            document.getElementById("file").value = file;
 
                             document.getElementById("date").disabled = false;
                             document.getElementById("amount").disabled = false;
@@ -112,6 +120,9 @@
             <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex; color: white;">Full Name: </h2> <h2 id='fullname' style="display: inline-flex; color: white;"></h2> </p>
             <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex; color: white;">Address: </h2> <h2 id='address' style="display: inline-flex; color: white;"></h2> </p>
             <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex; color: white;">Household Income: RM</h2> <h2 id='income' style="display: inline-flex; color: white;"></h2></p> 
+
+            <!--Trigger modal-->
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px" data-toggle="modal" data-target="#addOrganizationModal"><u>Documents</u></p>
 
 
         </div>
@@ -145,6 +156,31 @@
             </div>
             </div>
         </div>
+    </div>
+</div>
+<!--Modal-->
+<div class="modal fade" id="addOrganizationModal" tabindex="-1" role="dialog" aria-labelledby="addOrganizationLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" role="document" >
+    <div class="modal-content" style="background: #FF416C;
+        background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+        background: linear-gradient(to right, #FF4B2B, #FF416C);">
+        <div class="modal-header">
+        <h5 class="modal-title text-white" id="addOrganizationLabel">Documents</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+            <div class="modal-body" >
+                <div class="mb-4">
+                    <label for="organizationName" class="form-label font-weight-bold text-white">wew: </label>
+                    <br>
+                    <input type="text" class="form-organizationName form-control" name="file" size="50" maxlength="30" placeholder="No applicant selected" id="file" disabled>
+                </div>
+            </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+    </div>
     </div>
 </div>
 <?php
