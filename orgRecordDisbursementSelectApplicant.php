@@ -104,10 +104,9 @@
                         }
 
             </Script>
-            <!--Trigger modal-->
-            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><u>Full Name: </u> <u id='fullname'></u> </p>
-            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><u>Address: </u> <u id='address'></u> </p>
-            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><u>Household Income: </u> <u id='income'></u></p> 
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex">Full Name: </h2> <h2 id='fullname' style="display: inline-flex"></h2> </p>
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex">Address: </h2> <h2 id='address' style="display: inline-flex"></h2> </p>
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex">Household Income: RM</h2> <h2 id='income' style="display: inline-flex"></h2></p> 
 
 
         </div>
