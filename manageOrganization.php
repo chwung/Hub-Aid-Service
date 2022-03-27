@@ -95,7 +95,9 @@
   </div>
 </nav>
 <!-- Navbar -->
-<div class="container-fluid">
+<div class="container-fluid" style="background-image: url('honeycombGrey.jpg');
+    background-size: cover;
+	height: 100vh;">
     <div class="row">
         <div class="col-lg-5">
             
@@ -186,7 +188,7 @@
         </div>
         
         <div class="col-lg-6">
-            <p1 class="font-weight-bolder" id="nameOrganization" style="visibility: hidden;">  Organization Name</p1>
+            <p1 class="font-weight-bolder" id="nameOrganization" style="visibility: hidden;  color: white;">  Organization Name</p1>
             <br>
             <div class="card m-2" style="width: 30rem;" id="orgRepForm">
             <div class="card-body bg-light rounded " style="background: #FF416C;

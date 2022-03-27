@@ -134,7 +134,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
-  <body >
+  <body style="background-image: url('honeycombGrey.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100%;
+    background-repeat: no-repeat;">
       <div class="row vh-100 align-items-center justify-content-center mt-5">
         <div class="col-12 col-sm-8 col-md-6 col-lg-4 col-xl-4 rounded p-5 shadow bg-white" style="background: #FF416C;
 	background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);

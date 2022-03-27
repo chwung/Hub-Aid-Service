@@ -43,14 +43,19 @@
   </nav>
 </div>
 </nav>
-<body>
+<body style="background-image: url('honeycombGrey.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100%;
+    background-repeat: no-repeat;">
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-5">
             
             <br>
 
-            <h1><?php echo $orgnam ?></h1>
+            <h1 style='color: white;'><?php echo $orgnam ?></h1>
             <!-- disable link if no contributions made -->
             <?php  
               if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -117,10 +122,10 @@
                             $to = $yes['toDate'];
 
                             echo "<div class='row'>";
-                            echo "<h1>From Date: </h1> <h1 id='fromDate' style='text-indent: 10px'>$from</h1> <br>";
+                            echo "<h1 style='color: white;'>From Date: </h1> <h1 id='fromDate' style='text-indent: 10px; color: white;'>$from</h1> <br>";
                             echo "</div>";
                             echo "<div class='row'>";
-                            echo "<h1>To Date: </h1> <h1 id='toDate' style='text-indent: 10px'>$to</h1>";
+                            echo "<h1 style='color: white;'>To Date: </h1> <h1 id='toDate' style='text-indent: 10px; color: white;'>$to</h1>";
                             echo "</div>";
                           }
                       }

@@ -43,7 +43,12 @@ $orgnam = $org['orgName'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="tableCSS.css">
   </head>
-  <body >
+  <body style="background-image: url('honeycombGrey.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100%;
+    background-repeat: no-repeat;">
   <div class="container mt-5">
                         <div class=" row align-items-center justify-content-center">
                             <div class="  col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 bg-dark rounded p-5 shadow">

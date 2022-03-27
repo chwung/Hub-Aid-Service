@@ -46,12 +46,17 @@
   </nav>
 </div>
 </nav>
-<body>
+<body style="background-image: url('honeycombGrey.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100%;
+    background-repeat: no-repeat;">
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-5">
             <br>
-            <h3><?php echo $orgnam ?></h3>
+            <h3 style='color: white;'><?php echo $orgnam ?></h3>
             <select id="choose" class="m-2 w-50" name ="choose" onchange ="displaylist()">
                     <option selected disabled>--Select an Applicant--</option>
                     <?php
@@ -104,9 +109,9 @@
                         }
 
             </Script>
-            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex">Full Name: </h2> <h2 id='fullname' style="display: inline-flex"></h2> </p>
-            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex">Address: </h2> <h2 id='address' style="display: inline-flex"></h2> </p>
-            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex">Household Income: RM</h2> <h2 id='income' style="display: inline-flex"></h2></p> 
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex; color: white;">Full Name: </h2> <h2 id='fullname' style="display: inline-flex; color: white;"></h2> </p>
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex; color: white;">Address: </h2> <h2 id='address' style="display: inline-flex; color: white;"></h2> </p>
+            <p class="h6 ml-2 font-weight-bolder text-primary" style="width:170px"><h2 style="display: inline-flex; color: white;">Household Income: RM</h2> <h2 id='income' style="display: inline-flex; color: white;"></h2></p> 
 
 
         </div>
