@@ -64,7 +64,7 @@ $orgnam = $org['orgName'];
                                                     <tbody>
                                                     
                                                     <?php
-                                                    $query = "SELECT * FROM appeal WHERE toDate >= CURDATE() AND orgID = '$emailID'";
+                                                    $query = "SELECT * FROM appeal WHERE toDate >= CURDATE() AND orgID = '$emailID' AND outcome = 'Active' ";
                                                     $appeal = $connection->query($query);
                                                     if($appeal -> num_rows > 0)
                                                     {
