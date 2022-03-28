@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             $stmt->store_result();
             $appealCount = $stmt -> num_rows;
             
-            $appealID = 'A'.substr(str_repeat(0,4).$appealCount+1, -4);
+            $appealID = 'P'.substr(str_repeat(0,4).$appealCount+1, -4);
             $outcome = 'Active';
               
             $sqlQuery = "INSERT INTO APPEAL VALUES ('$appealID', '$fromDate', '$toDate', '$description', '$outcome', '$organization')";
