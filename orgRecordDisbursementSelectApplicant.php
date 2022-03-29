@@ -146,7 +146,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="goods" class="form-label font-weight-bold text-white">Goods: </label>
-                        <textarea name="goods" id="goods" cols="56" rows="3" required disabled></textarea>
+                        <textarea name="goods" id="goods" cols="51" rows="3" required disabled></textarea>
                         <!-- <input type="text area" class="form-control" name="goods" id="goods" size="50" maxlength="20"  required disabled> -->
                     </div>
                     
@@ -172,7 +172,7 @@
         </div>
             <div class="modal-body" >
                 <div class="mb-4">
-                    <label for="organizationName" class="form-label font-weight-bold text-white">wew: </label>
+                    <label for="organizationName" class="form-label font-weight-bold text-white">Name: </label>
                     <br>
                     <input type="text" class="form-organizationName form-control" name="file" size="50" maxlength="30" placeholder="No applicant selected" id="file" disabled>
                 </div>
@@ -200,7 +200,7 @@ if(isset($_POST['confirm'])){
     $stmt->store_result();
     $disbursementCount = $stmt -> num_rows;
 
-    $disbursementID = 'D'.substr(str_repeat(0,4).$disbursementCount+1, -4);
+    $disbursementID = 'S'.substr(str_repeat(0,4).$disbursementCount+1, -4);
 
     $sqlQuery = "INSERT INTO DISBURSEMENT VALUES ('$date','$cash','$good', '$appealID','$disbursementID', '$id')";
     $result = $connection -> query($sqlQuery);  //execute query (php)
@@ -211,7 +211,7 @@ if(isset($_POST['confirm'])){
     $result = $connection -> query($update);  //execute query (php)
 
     echo '<script type="text/javascript">';
-    echo "alert('Disbursement for Appeal $appealID create');";
+    echo "alert('Disbursement for Applicant $appeal created');";
     echo '</script>';
 }
 ?>
