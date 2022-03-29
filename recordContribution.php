@@ -96,7 +96,7 @@ $orgnam = $org['orgName'];
                                                             echo '<tr>';
                                                             
                                                             echo '<td>';
-                                                            echo "<a href='contributionGoods.php"; 
+                                                            echo "<a href='contribution.php"; 
                                                             echo "?orgName=$name";
                                                             echo "&orgAddress=$address";
                                                             echo "&appealID=$appealID'";
@@ -106,7 +106,7 @@ $orgnam = $org['orgName'];
                                                             echo "</td>";
 
                                                             echo "<td>";
-                                                            echo "<a href='contributionGoods.php"; 
+                                                            echo "<a href='contribution.php"; 
                                                             echo "?orgName=$name";
                                                             echo "&orgAddress=$address";
                                                             echo "&appealID=$appealID'";
@@ -116,7 +116,7 @@ $orgnam = $org['orgName'];
                                                             echo "</td>";
 
                                                             echo "<td>";
-                                                            echo "<a href='contributionGoods.php"; 
+                                                            echo "<a href='contribution.php"; 
                                                             echo "?orgName=$name";
                                                             echo "&orgAddress=$address";
                                                             echo "&appealID=$appealID'";
@@ -126,7 +126,7 @@ $orgnam = $org['orgName'];
                                                             echo "</td>";
 
                                                             echo "<td>";
-                                                            echo "<a href='contributionGoods.php"; 
+                                                            echo "<a href='contribution.php"; 
                                                             echo "?orgName=$name";
                                                             echo "&orgAddress=$address";
                                                             echo "&appealID=$appealID'";
